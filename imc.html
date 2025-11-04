@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMC · Calcsy</title>
+  <meta name="description" content="Calcule o IMC com classificação (Abaixo, Normal, Sobrepeso, Obesidade I/II/III).">
+  <link rel="canonical" href="https://calcsy.com.br/imc.html">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WT91WL8BZB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WT91WL8BZB');
+</script>
+</head>
+<body>
+<header class="header" role="banner">
+  <a class="brand" href="index.html" aria-label="Ir para início">
+    <span class="brand-box">C</span><span class="sr-only">Calcsy</span>
+  </a>
+  <nav class="nav" aria-label="Principal">
+    <a href="index.html">Início</a>
+    <div class="dropdown">
+      <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Categorias</button>
+      <div class="dropdown-menu" role="menu">
+        <a role="menuitem" href="financas.html">Finanças</a>
+        <a role="menuitem" href="saude.html">Saúde</a>
+        <a role="menuitem" href="trade.html">Trade esportivo</a>
+      </div>
+    </div>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Privacidade</a>
+  </nav>
+</header>
+<main class="main" role="main">
+
+<a class="back" href="saude.html">← Voltar</a>
+<h1>IMC</h1>
+<p class="tagline">Índice de Massa Corporal com classificação automática.</p>
+
+<form class="form" oninput="calcIMC()">
+  <label for="peso">Peso (kg)</label>
+  <input id="peso" type="number" step="0.1" value="80">
+
+  <label for="alt">Altura (cm)</label>
+  <input id="alt" type="number" step="0.1" value="175">
+</form>
+
+<div class="result" id="out">
+  <div id="res"></div>
+</div>
+
+<script>
+function classif(imc){
+  if(imc < 18.5) return 'Abaixo do peso';
+  if(imc < 25) return 'Normal';
+  if(imc < 30) return 'Sobrepeso';
+  if(imc < 35) return 'Obesidade I';
+  if(imc < 40) return 'Obesidade II';
+  return 'Obesidade III';
+}
+function calcIMC(){
+  const peso = parseFloat(document.getElementById('peso').value||'0');
+  const alt = parseFloat(document.getElementById('alt').value||'0')/100;
+  if(alt<=0){document.getElementById('res').textContent='';return;}
+  const imc = peso/(alt*alt);
+  document.getElementById('res').innerHTML = `<strong>IMC:</strong> ${imc.toFixed(2)} — <strong>${classif(imc)}</strong>`;
+}
+window.addEventListener('DOMContentLoaded', calcIMC);
+</script>
+</main>
+<footer class="footer" role="contentinfo">
+  <p>© 2025 · Calcsy — Transformamos cálculos demorados em operações rápidas e fáceis.</p>
+</footer>
+<script>
+document.querySelectorAll('.dropdown-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const menu = btn.nextElementSibling;
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu.classList.toggle('open');
+  });
+});
+document.addEventListener('click', (e)=>{
+  document.querySelectorAll('.dropdown').forEach(d=>{
+    if(!d.contains(e.target)){
+      const btn = d.querySelector('.dropdown-btn');
+      const menu = d.querySelector('.dropdown-menu');
+      if(btn && menu){ btn.setAttribute('aria-expanded','false'); menu.classList.remove('open');}
+    }
+  });
+});
+</script>
+</body>
+</html>
