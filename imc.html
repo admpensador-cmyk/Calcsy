@@ -3,97 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IMC · Calcsy</title>
-  <meta name="description" content="Calcule o IMC com classificação (Abaixo, Normal, Sobrepeso, Obesidade I/II/III).">
-  <link rel="canonical" href="https://calcsy.com.br/imc.html">
+  <title>Calculadora de IMC – Calcsy</title>
+  <meta name="description" content="Calcule seu IMC e veja a classificação de acordo com o peso.">
+  <link rel="canonical" href="https://www.calcsy.com.br/imc.html">
   <link rel="stylesheet" href="styles.css">
-  <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HNM92S744Q');
-</script>
+  <link rel="icon" href="favicon.ico">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de IMC",
+    "url": "https://www.calcsy.com.br/imc.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Saúde", "item": "https://www.calcsy.com.br/saude.html" },
+      { "@type": "ListItem", "position": 3, "name": "IMC", "item": "https://www.calcsy.com.br/imc.html" }
+    ]
+  }
+  </script>
 </head>
 <body>
-<header class="header" role="banner">
-  <a class="brand" href="index.html" aria-label="Ir para início">
-    <span class="brand-box">C</span><span class="sr-only">Calcsy</span>
-  </a>
-  <nav class="nav" aria-label="Principal">
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+  <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
-    <div class="dropdown">
-      <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Categorias</button>
-      <div class="dropdown-menu" role="menu">
-        <a role="menuitem" href="financas.html">Finanças</a>
-        <a role="menuitem" href="saude.html">Saúde</a>
-        <a role="menuitem" href="trade.html">Trade esportivo</a>
-      </div>
-    </div>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-    <a href="privacidade.html">Privacidade</a>
+    <a href="saude.html">Saúde</a>
   </nav>
-</header>
-<main class="main" role="main">
 
-<a class="back" href="saude.html">← Voltar</a>
-<h1>IMC</h1>
-<p class="tagline">Índice de Massa Corporal com classificação automática.</p>
+  <main class="page">
+    <a href="saude.html" class="back-link">← Voltar</a>
+    <h1>Calculadora de IMC</h1>
 
-<form class="form" oninput="calcIMC()">
-  <label for="peso">Peso (kg)</label>
-  <input id="peso" type="number" step="0.1" value="80">
+    <form class="form" onsubmit="return false;">
+      <label>Peso (kg)
+        <input type="number" id="imc-peso" value="80" step="0.1">
+      </label>
+      <label>Altura (cm)
+        <input type="number" id="imc-altura" value="175" step="0.1">
+      </label>
+      <button type="button" onclick="calcIMC()">Calcular</button>
+    </form>
 
-  <label for="alt">Altura (cm)</label>
-  <input id="alt" type="number" step="0.1" value="175">
-</form>
+    <div class="result" id="imc-resultado"></div>
+  </main>
 
-<div class="result" id="out">
-  <div id="res"></div>
-</div>
-
-<script>
-function classif(imc){
-  if(imc < 18.5) return 'Abaixo do peso';
-  if(imc < 25) return 'Normal';
-  if(imc < 30) return 'Sobrepeso';
-  if(imc < 35) return 'Obesidade I';
-  if(imc < 40) return 'Obesidade II';
-  return 'Obesidade III';
-}
-function calcIMC(){
-  const peso = parseFloat(document.getElementById('peso').value||'0');
-  const alt = parseFloat(document.getElementById('alt').value||'0')/100;
-  if(alt<=0){document.getElementById('res').textContent='';return;}
-  const imc = peso/(alt*alt);
-  document.getElementById('res').innerHTML = `<strong>IMC:</strong> ${imc.toFixed(2)} — <strong>${classif(imc)}</strong>`;
-}
-window.addEventListener('DOMContentLoaded', calcIMC);
-</script>
-</main>
-<footer class="footer" role="contentinfo">
-  <p>© 2025 · Calcsy — Transformamos cálculos demorados em operações rápidas e fáceis.</p>
-</footer>
-<script>
-document.querySelectorAll('.dropdown-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const menu = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
-  });
-});
-document.addEventListener('click', (e)=>{
-  document.querySelectorAll('.dropdown').forEach(d=>{
-    if(!d.contains(e.target)){
-      const btn = d.querySelector('.dropdown-btn');
-      const menu = d.querySelector('.dropdown-menu');
-      if(btn && menu){ btn.setAttribute('aria-expanded','false'); menu.classList.remove('open');}
+  <footer class="footer">© 2025 · Calcsy</footer>
+  <script src="menu.js"></script>
+  <script>
+    function classificaIMC(v){
+      if (v < 18.5) return "Abaixo do peso";
+      if (v < 25) return "Peso normal";
+      if (v < 30) return "Sobrepeso";
+      if (v < 35) return "Obesidade grau I";
+      if (v < 40) return "Obesidade grau II";
+      return "Obesidade grau III";
     }
-  });
-});
-</script>
+    function calcIMC(){
+      const peso = Number(document.getElementById('imc-peso').value);
+      const alturaCm = Number(document.getElementById('imc-altura').value);
+      const altura = alturaCm/100;
+      const imc = peso / (altura*altura);
+      document.getElementById('imc-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>IMC:</strong> ${imc.toFixed(2)}</p>
+        <p><strong>Classificação:</strong> ${classificaIMC(imc)}</p>
+      `;
+    }
+    window.addEventListener('DOMContentLoaded', calcIMC);
+  </script>
 </body>
 </html>

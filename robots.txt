@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://calcsy.com.br/sitemap.xml
+
+Sitemap: https://www.calcsy.com.br/sitemap.xml

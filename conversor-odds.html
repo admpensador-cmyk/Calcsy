@@ -3,134 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conversor de Odds · Calcsy</title>
-  <meta name="description" content="Converta odds decimal, americana e fracionária, com probabilidade implícita.">
-  <link rel="canonical" href="https://calcsy.com.br/conversor-odds.html">
+  <title>Conversor de Odds – Calcsy</title>
+  <meta name="description" content="Converta odds decimal, americana e fracionária e veja a probabilidade implícita.">
+  <link rel="canonical" href="https://www.calcsy.com.br/conversor-odds.html">
   <link rel="stylesheet" href="styles.css">
-  <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HNM92S744Q');
-</script>
+  <link rel="icon" href="favicon.ico">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Conversor de Odds",
+    "url": "https://www.calcsy.com.br/conversor-odds.html",
+    "applicationCategory": "SportsApplication",
+    "operatingSystem": "Any",
+    "description": "Ferramenta para conversão de odds entre decimal, americana e fracionária."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Trade esportivo", "item": "https://www.calcsy.com.br/trade.html" },
+      { "@type": "ListItem", "position": 3, "name": "Conversor de odds", "item": "https://www.calcsy.com.br/conversor-odds.html" }
+    ]
+  }
+  </script>
 </head>
 <body>
-<header class="header" role="banner">
-  <a class="brand" href="index.html" aria-label="Ir para início">
-    <span class="brand-box">C</span><span class="sr-only">Calcsy</span>
-  </a>
-  <nav class="nav" aria-label="Principal">
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+  <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
-    <div class="dropdown">
-      <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Categorias</button>
-      <div class="dropdown-menu" role="menu">
-        <a role="menuitem" href="financas.html">Finanças</a>
-        <a role="menuitem" href="saude.html">Saúde</a>
-        <a role="menuitem" href="trade.html">Trade esportivo</a>
-      </div>
-    </div>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-    <a href="privacidade.html">Privacidade</a>
+    <a href="trade.html">Trade esportivo</a>
   </nav>
-</header>
-<main class="main" role="main">
 
-<a class="back" href="trade.html">← Voltar</a>
-<h1>Conversor de Odds</h1>
-<p class="tagline">Preencha qualquer formato e os demais serão calculados automaticamente.</p>
+  <main class="page">
+    <a href="trade.html" class="back-link">← Voltar</a>
+    <h1>Conversor de Odds</h1>
 
-<form class="form">
-  <label for="odDec">Odds decimal</label>
-  <input id="odDec" type="number" step="0.0001" value="2.50">
-  <label for="odAm">Odds americana</label>
-  <input id="odAm" type="number" step="1" value="150">
-  <label for="odFrac">Odds fracionária (ex.: 3/2)</label>
-  <input id="odFrac" type="text" value="3/2">
-</form>
+    <form class="form" onsubmit="return false;">
+      <label>Odds decimal
+        <input type="number" id="od-dec" step="0.01" oninput="fromDecimal()">
+      </label>
+      <label>Odds americana
+        <input type="number" id="od-ame" step="1" oninput="fromAmerican()">
+      </label>
+      <label>Odds fracionária
+        <input type="text" id="od-frac" oninput="fromFractional()" placeholder="11/10">
+      </label>
+    </form>
 
-<div class="result" id="out">
-  <div id="res"></div>
-</div>
+    <div class="result" id="od-res"></div>
+  </main>
 
-<script>
-function decFromAmerican(a){
-  if (a >= 100) return 1 + (100/ a);
-  if (a <= -100) return 1 + ((-a)/100);
-  return NaN;
-}
-function americanFromDec(d){
-  if (d >= 2) return Math.round((d-1)*100);
-  return Math.round(-100/(d-1));
-}
-function decFromFrac(str){
-  const m = String(str).split('/');
-  if(m.length!==2) return NaN;
-  const n = parseFloat(m[0]), den = parseFloat(m[1]);
-  if(!isFinite(n)||!isFinite(den)||den===0) return NaN;
-  return 1 + (n/den);
-}
-function fracFromDec(d){
-  const x = d-1;
-  let bestN=1,bestD=1,bestErr=1e9;
-  for(let den=1; den<=100; den++){
-    const num = Math.round(x*den);
-    const val = num/den;
-    const err = Math.abs(val-x);
-    if(err<bestErr){bestErr=err;bestN=num;bestD=den;}
-  }
-  return `${bestN}/${bestD}`;
-}
-function refresh(d){
-  if(!isFinite(d) || d<=1){ document.getElementById('res').textContent='Valor inválido.'; return; }
-  const a = americanFromDec(d);
-  const f = fracFromDec(d);
-  const p = 1/d;
-  document.getElementById('odDec').value = d.toFixed(2);
-  document.getElementById('odAm').value = a;
-  document.getElementById('odFrac').value = f;
-  document.getElementById('res').innerHTML = `<strong>Probabilidade implícita:</strong> ${(p*100).toFixed(2).replace('.',',')}%`;
-}
-function init(){
-  const dec = parseFloat(document.getElementById('odDec').value);
-  refresh(dec);
-}
-['odDec','odAm','odFrac'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', (e)=>{
-    const id = e.target.id;
-    let d=NaN;
-    if(id==='odDec'){ d = parseFloat(e.target.value); }
-    if(id==='odAm'){ d = decFromAmerican(parseFloat(e.target.value)); }
-    if(id==='odFrac'){ d = decFromFrac(e.target.value); }
-    if(isFinite(d)) refresh(d);
-  });
-});
-window.addEventListener('DOMContentLoaded', init);
-</script>
-</main>
-<footer class="footer" role="contentinfo">
-  <p>© 2025 · Calcsy — Transformamos cálculos demorados em operações rápidas e fáceis.</p>
-</footer>
-<script>
-document.querySelectorAll('.dropdown-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const menu = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
-  });
-});
-document.addEventListener('click', (e)=>{
-  document.querySelectorAll('.dropdown').forEach(d=>{
-    if(!d.contains(e.target)){
-      const btn = d.querySelector('.dropdown-btn');
-      const menu = d.querySelector('.dropdown-menu');
-      if(btn && menu){ btn.setAttribute('aria-expanded','false'); menu.classList.remove('open');}
+  <footer class="footer">© 2025 · Calcsy</footer>
+  <script src="menu.js"></script>
+  <script>
+    function showProb(dec){
+      if (!dec || dec <= 0) {
+        document.getElementById('od-res').innerHTML = '';
+        return;
+      }
+      const prob = (1/dec)*100;
+      document.getElementById('od-res').innerHTML = `
+        <h2>Probabilidade implícita</h2>
+        <p>${prob.toFixed(2)}%</p>
+      `;
     }
-  });
-});
-</script>
+    function fromDecimal(){
+      const d = Number(document.getElementById('od-dec').value);
+      if (!d) return;
+      const ame = d >= 2 ? (d-1)*100 : (-100/(d-1));
+      document.getElementById('od-ame').value = ame.toFixed(0);
+      document.getElementById('od-frac').value = `${(d-1).toFixed(2)}/1`;
+      showProb(d);
+    }
+    function fromAmerican(){
+      const a = Number(document.getElementById('od-ame').value);
+      if (!a) return;
+      let dec;
+      if (a > 0) dec = 1 + (a/100);
+      else dec = 1 + (100/Math.abs(a));
+      document.getElementById('od-dec').value = dec.toFixed(2);
+      document.getElementById('od-frac').value = `${(dec-1).toFixed(2)}/1`;
+      showProb(dec);
+    }
+    function fromFractional(){
+      const f = document.getElementById('od-frac').value;
+      if (!f.includes('/')) return;
+      const parts = f.split('/');
+      const num = Number(parts[0]);
+      const den = Number(parts[1]);
+      if (!num || !den) return;
+      const dec = 1 + (num/den);
+      document.getElementById('od-dec').value = dec.toFixed(2);
+      document.getElementById('od-ame').value = dec >= 2 ? ((dec-1)*100).toFixed(0) : (-100/(dec-1)).toFixed(0);
+      showProb(dec);
+    }
+  </script>
 </body>
 </html>

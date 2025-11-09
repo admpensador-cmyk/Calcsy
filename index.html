@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calcsy • Calculadoras rápidas e organizadas</title>
-  <meta name="description" content="Transformamos cálculos demorados em operações rápidas e fáceis. Escolha uma categoria e use calculadoras de finanças, saúde e trade esportivo.">
+  <title>Calcsy – Calculadoras rápidas de Finanças, Saúde e Trade</title>
+  <meta name="description" content="Transformamos cálculos demorados em operações rápidas e fáceis. Use calculadoras de finanças, saúde e trade esportivo em um só lugar.">
   <link rel="canonical" href="https://www.calcsy.com.br/">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
 
-  <!-- GA4 correto -->
+  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,67 +17,105 @@
     gtag('js', new Date());
     gtag('config', 'G-HNM92S744Q');
   </script>
+
+  <!-- JSON-LD global (Organization + Website + Breadcrumb) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Calcsy",
+        "url": "https://www.calcsy.com.br/",
+        "logo": "https://www.calcsy.com.br/favicon.ico",
+        "description": "Transformamos cálculos demorados em operações rápidas e fáceis."
+      },
+      {
+        "@type": "WebSite",
+        "name": "Calcsy",
+        "url": "https://www.calcsy.com.br/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.calcsy.com.br/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://www.calcsy.com.br/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <header>
-    <div class="topbar">
-      <a class="brand" href="/">
-        <div class="brand-box">C</div>
-        <span class="brand-name">Calcsy</span>
-      </a>
-      <nav>
-        <a href="/">Início</a>
-        <div class="dropdown">
-          <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">
-            Categorias
-            <span aria-hidden="true">▾</span>
-          </button>
-          <div class="dropdown-menu" aria-label="Submenu categorias">
-            <a href="/financas.html">Finanças</a>
-            <a href="/saude.html">Saúde</a>
-            <a href="/trade.html">Trade esportivo</a>
-          </div>
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <span class="brand-icon">C</span>
+      <span class="brand-text">Calcsy</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html" class="active">Início</a>
+      <div class="dropdown">
+        <button class="dropbtn">Categorias ▾</button>
+        <div class="dropdown-content">
+          <a href="financas.html">Finanças</a>
+          <a href="saude.html">Saúde</a>
+          <a href="trade.html">Trade esportivo</a>
         </div>
-        <a href="/sobre.html">Sobre</a>
-        <a href="/contato.html">Contato</a>
-        <a href="/privacidade.html">Privacidade</a>
-      </nav>
-    </div>
+      </div>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+      <a href="privacidade.html">Privacidade</a>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
   </header>
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index.html">Início</a>
+    <a href="financas.html">Finanças</a>
+    <a href="saude.html">Saúde</a>
+    <a href="trade.html">Trade esportivo</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Privacidade</a>
+  </nav>
 
-  <main>
-    <h1 class="hero-title">Escolha uma categoria</h1>
-    <p class="hero-sub">Transformamos cálculos demorados em operações rápidas e fáceis.</p>
+  <main class="page">
+    <section class="hero">
+      <h1>Calculadoras em um só lugar</h1>
+      <p class="tagline">Transformamos cálculos demorados em operações rápidas e fáceis.</p>
+    </section>
 
-    <section class="cards" aria-label="Categorias de calculadoras">
-      <a class="card" href="/financas.html">
+    <section class="cards-grid">
+      <a class="card" href="financas.html">
         <div class="card-icon">💰</div>
-        <div>
-          <div class="card-title">Finanças</div>
-          <div class="card-desc">Taxas equivalentes, juros compostos e mais.</div>
-        </div>
+        <h2>Finanças</h2>
+        <p>Taxas equivalentes, juros compostos e mais.</p>
       </a>
-
-      <a class="card" href="/saude.html">
+      <a class="card" href="saude.html">
         <div class="card-icon">🩺</div>
-        <div>
-          <div class="card-title">Saúde</div>
-          <div class="card-desc">IMC e ferramentas para bem-estar.</div>
-        </div>
+        <h2>Saúde</h2>
+        <p>IMC e utilitários rápidos.</p>
       </a>
-
-      <a class="card" href="/trade.html">
+      <a class="card" href="trade.html">
         <div class="card-icon">📊</div>
-        <div>
-          <div class="card-title">Trade esportivo</div>
-          <div class="card-desc">Conversor de odds e utilitários.</div>
-        </div>
+        <h2>Trade esportivo</h2>
+        <p>Conversor de odds e ferramentas.</p>
       </a>
     </section>
   </main>
 
-  <footer>
+  <footer class="footer">
     © 2025 · Calcsy — cálculos rápidos quando você precisa.
   </footer>
+
+  <script src="menu.js"></script>
 </body>
 </html>

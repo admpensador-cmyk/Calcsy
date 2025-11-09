@@ -3,114 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juros Compostos · Calcsy</title>
-  <meta name="description" content="Simule valor futuro com aportes mensais, juros compostos ao mês.">
-  <link rel="canonical" href="https://calcsy.com.br/juros-compostos.html">
+  <title>Calculadora de Juros Compostos – Calcsy</title>
+  <meta name="description" content="Calcule valor futuro com juros compostos, aporte mensal e tempo.">
+  <link rel="canonical" href="https://www.calcsy.com.br/juros-compostos.html">
   <link rel="stylesheet" href="styles.css">
-  <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HNM92S744Q');
-</script>
+  <link rel="icon" href="favicon.ico">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Juros Compostos",
+    "url": "https://www.calcsy.com.br/juros-compostos.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Simule juros compostos com aportes mensais."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanças", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Juros compostos", "item": "https://www.calcsy.com.br/juros-compostos.html" }
+    ]
+  }
+  </script>
 </head>
 <body>
-<header class="header" role="banner">
-  <a class="brand" href="index.html" aria-label="Ir para início">
-    <span class="brand-box">C</span><span class="sr-only">Calcsy</span>
-  </a>
-  <nav class="nav" aria-label="Principal">
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+  <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
-    <div class="dropdown">
-      <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Categorias</button>
-      <div class="dropdown-menu" role="menu">
-        <a role="menuitem" href="financas.html">Finanças</a>
-        <a role="menuitem" href="saude.html">Saúde</a>
-        <a role="menuitem" href="trade.html">Trade esportivo</a>
-      </div>
-    </div>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-    <a href="privacidade.html">Privacidade</a>
+    <a href="financas.html">Finanças</a>
   </nav>
-</header>
-<main class="main" role="main">
 
-<a class="back" href="financas.html">← Voltar</a>
-<h1>Juros Compostos</h1>
-<p class="tagline">Simule rapidamente o valor futuro com juros ao mês e aportes mensais.</p>
+  <main class="page">
+    <a href="financas.html" class="back-link">← Voltar</a>
+    <h1>Calculadora de Juros Compostos</h1>
 
-<form class="form" oninput="calcJC()">
-  <label for="pv">Valor inicial (R$)</label>
-  <input id="pv" type="number" step="0.01" value="1000">
+    <form class="form" onsubmit="return false;">
+      <label>Valor inicial (R$)
+        <input type="number" id="jc-inicial" value="1000" step="0.01">
+      </label>
+      <label>Aporte mensal (R$)
+        <input type="number" id="jc-aporte" value="200" step="0.01">
+      </label>
+      <label>Taxa ao mês (%)
+        <input type="number" id="jc-taxa" value="1" step="0.01">
+      </label>
+      <label>Meses
+        <input type="number" id="jc-meses" value="12" step="1">
+      </label>
+      <button type="button" onclick="calcularJC()">Calcular</button>
+    </form>
 
-  <label for="pm">Aporte mensal (R$)</label>
-  <input id="pm" type="number" step="0.01" value="200">
+    <div class="result" id="jc-resultado"></div>
+  </main>
 
-  <label for="i">Taxa ao mês (%)</label>
-  <input id="i" type="number" step="0.0001" value="1">
-
-  <label for="n">Meses</label>
-  <input id="n" type="number" step="1" value="24">
-</form>
-
-<div class="ad-shell">
-  <ins class="adsbygoogle" style="display:block"
-       data-ad-client="ca-pub-8719130587364575"
-       data-ad-slot="0000000000"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-</div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>(adsbygoogle = window.adsbygoogle || []).push({}); setTimeout(()=>{const ins=document.querySelector('.adsbygoogle'); if(!ins||ins.getAttribute('data-ad-status')!=='filled'){const s=document.querySelector('.ad-shell'); if(s) s.style.display='none'}},3000);</script>
-
-<div class="result" id="out">
-  <div id="res"></div>
-  <p class="note">Aporte considerado ao final de cada mês.</p>
-</div>
-
-<script>
-const fmtBRL = v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-function calcJC(){
-  const pv = parseFloat(document.getElementById('pv').value||'0');
-  const pm = parseFloat(document.getElementById('pm').value||'0');
-  const i = parseFloat(document.getElementById('i').value||'0')/100;
-  const n = parseInt(document.getElementById('n').value||'0',10);
-  const vf = pv*Math.pow(1+i,n) + pm*((Math.pow(1+i,n)-1)/i);
-  const total = pv + pm*n;
-  const juros = vf - total;
-  document.getElementById('res').innerHTML = `
-    <strong>Valor futuro:</strong> ${fmtBRL(vf)}<br>
-    <strong>Total aportado:</strong> ${fmtBRL(total)}<br>
-    <strong>Juros acumulados:</strong> ${fmtBRL(juros)}
-  `;
-}
-window.addEventListener('DOMContentLoaded', calcJC);
-</script>
-</main>
-<footer class="footer" role="contentinfo">
-  <p>© 2025 · Calcsy — Transformamos cálculos demorados em operações rápidas e fáceis.</p>
-</footer>
-<script>
-document.querySelectorAll('.dropdown-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const menu = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
-  });
-});
-document.addEventListener('click', (e)=>{
-  document.querySelectorAll('.dropdown').forEach(d=>{
-    if(!d.contains(e.target)){
-      const btn = d.querySelector('.dropdown-btn');
-      const menu = d.querySelector('.dropdown-menu');
-      if(btn && menu){ btn.setAttribute('aria-expanded','false'); menu.classList.remove('open');}
+  <footer class="footer">© 2025 · Calcsy</footer>
+  <script src="menu.js"></script>
+  <script>
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     }
-  });
-});
-</script>
+    function calcularJC() {
+      const P = parseFloat(document.getElementById('jc-inicial').value) || 0;
+      const A = parseFloat(document.getElementById('jc-aporte').value) || 0;
+      const i = (parseFloat(document.getElementById('jc-taxa').value) || 0) / 100;
+      const n = parseInt(document.getElementById('jc-meses').value) || 0;
+
+      let montante = P * Math.pow(1+i, n);
+      for (let k = 1; k <= n; k++) {
+        montante += A * Math.pow(1+i, n - k);
+      }
+      const totalAportado = P + (A * n);
+      const juros = montante - totalAportado;
+
+      document.getElementById('jc-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>Valor futuro:</strong> ${formatBRL(montante)}</p>
+        <p><strong>Total aportado:</strong> ${formatBRL(totalAportado)}</p>
+        <p><strong>Juros acumulados:</strong> ${formatBRL(juros)}</p>
+      `;
+    }
+    window.addEventListener('DOMContentLoaded', calcularJC);
+  </script>
 </body>
 </html>

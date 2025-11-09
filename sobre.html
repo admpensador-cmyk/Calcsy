@@ -3,66 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobre · Calcsy</title>
-  <meta name="description" content="Por que o Calcsy existe: reunir calculadoras úteis em um só lugar e tornar tarefas demoradas rápidas.">
-  <link rel="canonical" href="https://calcsy.com.br/sobre.html">
+  <title>Sobre – Calcsy</title>
+  <meta name="description" content="Por que o Calcsy existe: reunir em um só lugar as calculadoras que você sempre precisa e nunca lembra onde estavam.">
+  <link rel="canonical" href="https://www.calcsy.com.br/sobre.html">
   <link rel="stylesheet" href="styles.css">
-  <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HNM92S744Q');
-</script>
+  <link rel="icon" href="favicon.ico">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Sobre o Calcsy",
+    "url": "https://www.calcsy.com.br/sobre.html"
+  }
+  </script>
 </head>
 <body>
-<header class="header" role="banner">
-  <a class="brand" href="index.html" aria-label="Ir para início">
-    <span class="brand-box">C</span><span class="sr-only">Calcsy</span>
-  </a>
-  <nav class="nav" aria-label="Principal">
-    <a href="index.html">Início</a>
-    <div class="dropdown">
-      <button class="dropdown-btn" aria-haspopup="true" aria-expanded="false">Categorias</button>
-      <div class="dropdown-menu" role="menu">
-        <a role="menuitem" href="financas.html">Finanças</a>
-        <a role="menuitem" href="saude.html">Saúde</a>
-        <a role="menuitem" href="trade.html">Trade esportivo</a>
-      </div>
-    </div>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-    <a href="privacidade.html">Privacidade</a>
-  </nav>
-</header>
-<main class="main" role="main">
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+  </header>
 
-<a class="back" href="index.html">← Voltar</a>
-<h1>Sobre o Calcsy</h1>
-<p>Eu sempre precisei fazer cálculos que sabia que precisava, mas não sabia como. Calculadoras online sempre ajudaram muito — porém, para cada necessidade eu tinha que buscar em lugares diferentes, nem sempre confiáveis. O Calcsy reúne, em um só lugar, aquelas contas que a gente precisa em algum momento da vida, com experiência direta e rápida.</p>
-</main>
-<footer class="footer" role="contentinfo">
-  <p>© 2025 · Calcsy — Transformamos cálculos demorados em operações rápidas e fáceis.</p>
-</footer>
-<script>
-document.querySelectorAll('.dropdown-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const menu = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
-  });
-});
-document.addEventListener('click', (e)=>{
-  document.querySelectorAll('.dropdown').forEach(d=>{
-    if(!d.contains(e.target)){
-      const btn = d.querySelector('.dropdown-btn');
-      const menu = d.querySelector('.dropdown-menu');
-      if(btn && menu){ btn.setAttribute('aria-expanded','false'); menu.classList.remove('open');}
-    }
-  });
-});
-</script>
+  <main class="page">
+    <a href="index.html" class="back-link">← Voltar</a>
+    <h1>Sobre o Calcsy</h1>
+    <p>
+      O Calcsy nasceu da necessidade de fazer cálculos que a gente sabe que precisa, mas nem sempre lembra a fórmula ou o lugar certo para fazer. Em vez de procurar em vários sites diferentes, a proposta é ter tudo centralizado, simples e rápido.
+    </p>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
 </body>
 </html>
