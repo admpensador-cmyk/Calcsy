@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de IMC – Calcsy</title>
-  <meta name="description" content="Calcule seu IMC e veja a classificação de acordo com o peso.">
+  <meta name="description" content="Calcule seu IMC rapidamente e veja em qual faixa de peso você se encontra segundo a tabela de índice de massa corporal.">
   <link rel="canonical" href="https://www.calcsy.com.br/imc.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
 
+  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,6 +18,7 @@
     gtag('config', 'G-HNM92S744Q');
   </script>
 
+  <!-- JSON-LD app -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -24,10 +26,12 @@
     "name": "Calculadora de IMC",
     "url": "https://www.calcsy.com.br/imc.html",
     "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any"
+    "operatingSystem": "Any",
+    "description": "Ferramenta simples para calcular o índice de massa corporal (IMC)."
   }
   </script>
 
+  <!-- JSON-LD breadcrumbs -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,6 +69,36 @@
     </form>
 
     <div class="result" id="imc-resultado"></div>
+
+    <!-- explicação -->
+    <section class="calc-info">
+      <h2>O que é o IMC?</h2>
+      <p>
+        O IMC (Índice de Massa Corporal) é uma fórmula usada como referência para indicar se a
+        pessoa está com o peso dentro, acima ou abaixo do recomendado para a altura.
+      </p>
+
+      <h3>Como é feito o cálculo</h3>
+      <p>
+        A conta é bem simples: dividimos o peso (em kg) pela altura (em metros) ao quadrado.
+        Nossa calculadora já faz essa conversão pra você — basta informar peso e altura em centímetros.
+      </p>
+
+      <h3>Tabela usada nesta calculadora</h3>
+      <ul>
+        <li><strong>Menor que 18,5:</strong> abaixo do peso</li>
+        <li><strong>18,5 a 24,9:</strong> peso normal</li>
+        <li><strong>25 a 29,9:</strong> sobrepeso</li>
+        <li><strong>30 a 34,9:</strong> obesidade grau I</li>
+        <li><strong>35 a 39,9:</strong> obesidade grau II</li>
+        <li><strong>40 ou mais:</strong> obesidade grau III</li>
+      </ul>
+
+      <p class="note">
+        ⚠️ O IMC é um indicador geral e não substitui avaliação médica ou nutricional,
+        especialmente para atletas ou pessoas com muita massa muscular.
+      </p>
+    </section>
   </main>
 
   <footer class="footer">© 2025 · Calcsy</footer>
@@ -78,17 +112,22 @@
       if (v < 40) return "Obesidade grau II";
       return "Obesidade grau III";
     }
+
     function calcIMC(){
       const peso = Number(document.getElementById('imc-peso').value);
       const alturaCm = Number(document.getElementById('imc-altura').value);
-      const altura = alturaCm/100;
-      const imc = peso / (altura*altura);
+      const altura = alturaCm / 100;
+      if (!peso || !altura) return;
+
+      const imc = peso / (altura * altura);
+
       document.getElementById('imc-resultado').innerHTML = `
         <h2>Resultado</h2>
         <p><strong>IMC:</strong> ${imc.toFixed(2)}</p>
         <p><strong>Classificação:</strong> ${classificaIMC(imc)}</p>
       `;
     }
+
     window.addEventListener('DOMContentLoaded', calcIMC);
   </script>
 </body>

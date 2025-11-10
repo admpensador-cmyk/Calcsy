@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Juros Compostos – Calcsy</title>
-  <meta name="description" content="Calcule valor futuro com juros compostos, aporte mensal e tempo.">
-  <link rel="canonical" href="https://www.calcsy.com.br/juros-compostos.html">
+  <title>Calculadora de Taxas Equivalentes – Calcsy</title>
+  <meta name="description" content="Converta taxas de juros entre períodos diferentes (dia, mês, ano) e descubra equivalências financeiras com precisão.">
+  <link rel="canonical" href="https://www.calcsy.com.br/taxas-equivalentes.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
 
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,15 +18,16 @@
     gtag('config', 'G-HNM92S744Q');
   </script>
 
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora de Juros Compostos",
-    "url": "https://www.calcsy.com.br/juros-compostos.html",
+    "name": "Calculadora de Taxas Equivalentes",
+    "url": "https://www.calcsy.com.br/taxas-equivalentes.html",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
-    "description": "Simule juros compostos com aportes mensais."
+    "description": "Converta taxas de juros entre diferentes períodos — diária, mensal, anual — e compare investimentos de forma correta."
   }
   </script>
 
@@ -36,16 +38,18 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
       { "@type": "ListItem", "position": 2, "name": "Finanças", "item": "https://www.calcsy.com.br/financas.html" },
-      { "@type": "ListItem", "position": 3, "name": "Juros compostos", "item": "https://www.calcsy.com.br/juros-compostos.html" }
+      { "@type": "ListItem", "position": 3, "name": "Taxas equivalentes", "item": "https://www.calcsy.com.br/taxas-equivalentes.html" }
     ]
   }
   </script>
 </head>
+
 <body>
   <header class="topbar">
     <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
     <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
   </header>
+
   <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
     <a href="financas.html">Finanças</a>
@@ -53,54 +57,87 @@
 
   <main class="page">
     <a href="financas.html" class="back-link">← Voltar</a>
-    <h1>Calculadora de Juros Compostos</h1>
+    <h1>Calculadora de Taxas Equivalentes</h1>
 
     <form class="form" onsubmit="return false;">
-      <label>Valor inicial (R$)
-        <input type="number" id="jc-inicial" value="1000" step="0.01">
+      <label>Taxa de origem (%)
+        <input type="number" id="tx-origem" value="1" step="0.01">
       </label>
-      <label>Aporte mensal (R$)
-        <input type="number" id="jc-aporte" value="200" step="0.01">
+      <label>Período de origem
+        <select id="periodo-origem">
+          <option value="dia">Ao dia</option>
+          <option value="mes" selected>Ao mês</option>
+          <option value="ano">Ao ano</option>
+        </select>
       </label>
-      <label>Taxa ao mês (%)
-        <input type="number" id="jc-taxa" value="1" step="0.01">
+      <label>Base de dias
+        <select id="base-dias">
+          <option value="252">252 (mercado financeiro)</option>
+          <option value="365">365 (ano civil)</option>
+        </select>
       </label>
-      <label>Meses
-        <input type="number" id="jc-meses" value="12" step="1">
-      </label>
-      <button type="button" onclick="calcularJC()">Calcular</button>
+      <button type="button" onclick="converterTaxa()">Converter</button>
     </form>
 
-    <div class="result" id="jc-resultado"></div>
+    <div class="result" id="tx-resultado"></div>
+
+    <!-- SEÇÃO EXPLICATIVA -->
+    <section class="calc-info">
+      <h2>Por que converter taxas?</h2>
+      <p>
+        Cada investimento ou financiamento pode usar uma base de tempo diferente: uma taxa pode ser mensal,
+        outra anual, ou até diária. Para comparar de forma justa, é essencial converter todas para o mesmo período.
+      </p>
+
+      <h3>Como funciona esta calculadora</h3>
+      <p>
+        A ferramenta transforma a taxa informada no período de origem para as demais equivalentes,
+        usando a base de dias selecionada (252 dias úteis ou 365 dias corridos).
+        Assim, você pode comparar investimentos, empréstimos e rendimentos de forma precisa.
+      </p>
+
+      <h3>Exemplo prático</h3>
+      <p>
+        Uma taxa de 1% ao mês equivale a cerca de 12,68% ao ano, considerando juros compostos.
+        Essa diferença é importante para avaliar rendimentos e custos financeiros corretamente.
+      </p>
+
+      <h3>Dica</h3>
+      <ul>
+        <li>Use <strong>base 252</strong> para o mercado financeiro (CDB, Tesouro, etc.).</li>
+        <li>Use <strong>base 365</strong> para comparações em juros de empréstimos ou financiamentos.</li>
+      </ul>
+    </section>
   </main>
 
   <footer class="footer">© 2025 · Calcsy</footer>
+
   <script src="menu.js"></script>
+
   <script>
-    function formatBRL(v){
-      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-    }
-    function calcularJC() {
-      const P = parseFloat(document.getElementById('jc-inicial').value) || 0;
-      const A = parseFloat(document.getElementById('jc-aporte').value) || 0;
-      const i = (parseFloat(document.getElementById('jc-taxa').value) || 0) / 100;
-      const n = parseInt(document.getElementById('jc-meses').value) || 0;
+    function converterTaxa() {
+      const taxa = parseFloat(document.getElementById('tx-origem').value) / 100;
+      const origem = document.getElementById('periodo-origem').value;
+      const base = parseInt(document.getElementById('base-dias').value);
 
-      let montante = P * Math.pow(1+i, n);
-      for (let k = 1; k <= n; k++) {
-        montante += A * Math.pow(1+i, n - k);
-      }
-      const totalAportado = P + (A * n);
-      const juros = montante - totalAportado;
+      let diaria;
+      if (origem === 'dia') diaria = taxa;
+      else if (origem === 'mes') diaria = Math.pow(1 + taxa, 1 / 21) - 1;
+      else diaria = Math.pow(1 + taxa, 1 / base) - 1;
 
-      document.getElementById('jc-resultado').innerHTML = `
-        <h2>Resultado</h2>
-        <p><strong>Valor futuro:</strong> ${formatBRL(montante)}</p>
-        <p><strong>Total aportado:</strong> ${formatBRL(totalAportado)}</p>
-        <p><strong>Juros acumulados:</strong> ${formatBRL(juros)}</p>
+      const mensal = (Math.pow(1 + diaria, 21) - 1) * 100;
+      const anual = (Math.pow(1 + diaria, base) - 1) * 100;
+      const diariaPct = diaria * 100;
+
+      document.getElementById('tx-resultado').innerHTML = `
+        <h2>Taxas equivalentes</h2>
+        <p><strong>Ao dia:</strong> ${diariaPct.toFixed(5)}%</p>
+        <p><strong>Ao mês:</strong> ${mensal.toFixed(3)}%</p>
+        <p><strong>Ao ano:</strong> ${anual.toFixed(2)}%</p>
       `;
     }
-    window.addEventListener('DOMContentLoaded', calcularJC);
+
+    window.addEventListener('DOMContentLoaded', converterTaxa);
   </script>
 </body>
 </html>

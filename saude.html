@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saúde – Calcsy</title>
-  <meta name="description" content="Calculadora de IMC e utilitários simples de saúde.">
+  <meta name="description" content="Calculadoras de saúde gratuitas: IMC e ferramentas simples para acompanhar seu corpo e bem-estar.">
   <link rel="canonical" href="https://www.calcsy.com.br/saude.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
 
+  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,14 +18,18 @@
     gtag('config', 'G-HNM92S744Q');
   </script>
 
+  <!-- JSON-LD: página de coleção -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Calculadoras de Saúde",
+    "description": "Ferramentas simples de saúde e bem-estar do Calcsy.",
     "url": "https://www.calcsy.com.br/saude.html"
   }
   </script>
+
+  <!-- JSON-LD: breadcrumbs -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,9 +49,11 @@
       <a href="financas.html">Finanças</a>
       <a class="active" href="saude.html">Saúde</a>
       <a href="trade.html">Trade esportivo</a>
+      <a href="sobre.html">Sobre</a>
     </nav>
     <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
   </header>
+
   <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
     <a href="financas.html">Finanças</a>
@@ -60,15 +67,27 @@
   <main class="page">
     <a href="index.html" class="back-link">← Voltar</a>
     <h1>Saúde</h1>
-    <p>Ferramentas simples para acompanhar seu corpo.</p>
+    <p>
+      Use as calculadoras desta seção para ter uma noção rápida sobre seu corpo. São ferramentas simples,
+      feitas para quem quer apenas “colocar os dados e ver o resultado” sem termos técnicos.
+    </p>
 
     <div class="cards-grid">
       <a class="card" href="imc.html">
         <div class="card-icon">🧍</div>
         <h2>IMC</h2>
-        <p>Descubra seu índice de massa corporal.</p>
+        <p>Descubra seu índice de massa corporal e veja a classificação.</p>
       </a>
     </div>
+
+    <section class="calc-info">
+      <h2>O que mais vamos trazer</h2>
+      <p>
+        Estamos organizando mais utilitários de saúde e bem-estar para deixar tudo em um só lugar.
+        A ideia do Calcsy é exatamente essa: facilitar tarefas que você sabe que precisa fazer,
+        mas não quer ficar procurando em vários sites diferentes.
+      </p>
+    </section>
   </main>
 
   <footer class="footer">© 2025 · Calcsy</footer>

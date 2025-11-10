@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conversor de Odds – Calcsy</title>
-  <meta name="description" content="Converta odds decimal, americana e fracionária e veja a probabilidade implícita.">
+  <meta name="description" content="Converta odds decimal, americana e fracionária e veja a probabilidade implícita. Ideal para traders e apostadores esportivos.">
   <link rel="canonical" href="https://www.calcsy.com.br/conversor-odds.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
 
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,6 +18,7 @@
     gtag('config', 'G-HNM92S744Q');
   </script>
 
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -25,7 +27,7 @@
     "url": "https://www.calcsy.com.br/conversor-odds.html",
     "applicationCategory": "SportsApplication",
     "operatingSystem": "Any",
-    "description": "Ferramenta para conversão de odds entre decimal, americana e fracionária."
+    "description": "Ferramenta para conversão de odds entre decimal, americana e fracionária, com cálculo automático da probabilidade implícita."
   }
   </script>
 
@@ -41,11 +43,13 @@
   }
   </script>
 </head>
+
 <body>
   <header class="topbar">
     <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
     <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
   </header>
+
   <nav id="mobileNav" class="mobile-nav">
     <a href="index.html">Início</a>
     <a href="trade.html">Trade esportivo</a>
@@ -68,9 +72,35 @@
     </form>
 
     <div class="result" id="od-res"></div>
+
+    <!-- DESCRIÇÃO DA CALCULADORA -->
+    <section class="calc-info">
+      <h2>Por que converter odds?</h2>
+      <p>
+        As odds (ou cotações) representam o retorno possível em uma aposta e a probabilidade
+        implícita de um evento acontecer. Cada formato — decimal, americana e fracionária —
+        expressa isso de forma diferente. Esta calculadora faz a conversão instantânea entre
+        os três formatos e mostra a probabilidade implícita automaticamente.
+      </p>
+
+      <h3>Formatos disponíveis</h3>
+      <ul>
+        <li><strong>Decimal:</strong> usado no Brasil e Europa (ex.: 1.80, 2.25). Mostra quanto você recebe no total a cada R$1 apostado.</li>
+        <li><strong>Americana:</strong> comum nos EUA (ex.: +150, -120). Indica quanto se ganha em relação a R$100 apostados.</li>
+        <li><strong>Fracionária:</strong> popular no Reino Unido (ex.: 5/2, 7/4). Mostra o lucro sobre o valor apostado.</li>
+      </ul>
+
+      <h3>Como interpretar</h3>
+      <p>
+        A <strong>probabilidade implícita</strong> mostra qual é a chance teórica de o evento
+        ocorrer segundo aquela odd. Odds mais baixas significam maior probabilidade e menor
+        retorno — e vice-versa.
+      </p>
+    </section>
   </main>
 
   <footer class="footer">© 2025 · Calcsy</footer>
+
   <script src="menu.js"></script>
   <script>
     function showProb(dec){
@@ -84,6 +114,7 @@
         <p>${prob.toFixed(2)}%</p>
       `;
     }
+
     function fromDecimal(){
       const d = Number(document.getElementById('od-dec').value);
       if (!d) return;
@@ -92,6 +123,7 @@
       document.getElementById('od-frac').value = `${(d-1).toFixed(2)}/1`;
       showProb(d);
     }
+
     function fromAmerican(){
       const a = Number(document.getElementById('od-ame').value);
       if (!a) return;
@@ -102,6 +134,7 @@
       document.getElementById('od-frac').value = `${(dec-1).toFixed(2)}/1`;
       showProb(dec);
     }
+
     function fromFractional(){
       const f = document.getElementById('od-frac').value;
       if (!f.includes('/')) return;
