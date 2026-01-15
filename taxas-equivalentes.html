@@ -1,143 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Taxas Equivalentes – Calcsy</title>
-  <meta name="description" content="Converta taxas de juros entre períodos diferentes (dia, mês, ano) e descubra equivalências financeiras com precisão.">
-  <link rel="canonical" href="https://www.calcsy.com.br/taxas-equivalentes.html">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.ico">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HNM92S744Q');
-  </script>
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Calculadora de Taxas Equivalentes",
-    "url": "https://www.calcsy.com.br/taxas-equivalentes.html",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Any",
-    "description": "Converta taxas de juros entre diferentes períodos — diária, mensal, anual — e compare investimentos de forma correta."
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
-      { "@type": "ListItem", "position": 2, "name": "Finanças", "item": "https://www.calcsy.com.br/financas.html" },
-      { "@type": "ListItem", "position": 3, "name": "Taxas equivalentes", "item": "https://www.calcsy.com.br/taxas-equivalentes.html" }
-    ]
-  }
-  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Taxas Equivalentes – Calcsy</title>
+  <meta name="description" content="Converta uma taxa efetiva de um período para taxas equivalentes em outros períodos (juros compostos)." />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <header class="topbar">
-    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
-    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
-  </header>
+  <!-- Cabeçalho simples no mesmo espírito das outras páginas -->
+  <div style="max-width:900px;margin:18px auto 0;padding:0 14px;">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+      <span style="opacity:.5;">☰</span>
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/financas.html" style="text-decoration:none;opacity:.85;">← Voltar</a>
+    </div>
+  </div>
 
-  <nav id="mobileNav" class="mobile-nav">
-    <a href="index.html">Início</a>
-    <a href="financas.html">Finanças</a>
-  </nav>
+  <main style="max-width:900px;margin:10px auto 40px;padding:0 14px;">
+    <h1 style="margin:14px 0 6px;">Taxas Equivalentes</h1>
+    <p style="margin:0 0 16px;opacity:.8">
+      Converta uma taxa <b>efetiva</b> de um período para outro (juros compostos).
+    </p>
 
-  <main class="page">
-    <a href="financas.html" class="back-link">← Voltar</a>
-    <h1>Calculadora de Taxas Equivalentes</h1>
+    <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
+        <label style="display:block;min-width:180px;">
+          <div style="font-size:13px;margin-bottom:6px;">Taxa do período (%)</div>
+          <input id="rate" inputmode="decimal" placeholder="Ex: 2,5"
+                 style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+        </label>
 
-    <form class="form" onsubmit="return false;">
-      <label>Taxa de origem (%)
-        <input type="number" id="tx-origem" value="1" step="0.01">
-      </label>
-      <label>Período de origem
-        <select id="periodo-origem">
-          <option value="dia">Ao dia</option>
-          <option value="mes" selected>Ao mês</option>
-          <option value="ano">Ao ano</option>
-        </select>
-      </label>
-      <label>Base de dias
-        <select id="base-dias">
-          <option value="252">252 (mercado financeiro)</option>
-          <option value="365">365 (ano civil)</option>
-        </select>
-      </label>
-      <button type="button" onclick="converterTaxa()">Converter</button>
-    </form>
+        <label style="display:block;min-width:220px;">
+          <div style="font-size:13px;margin-bottom:6px;">Período de origem</div>
+          <select id="origin" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+            <option value="daily">Diário</option>
+            <option value="monthly" selected>Mensal</option>
+            <option value="bimonthly">Bimestral</option>
+            <option value="quarterly">Trimestral</option>
+            <option value="semiannual">Semestral</option>
+            <option value="annual">Anual</option>
+          </select>
+        </label>
 
-    <div class="result" id="tx-resultado"></div>
+        <button id="calc"
+                style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+          Calcular
+        </button>
+      </div>
 
-    <!-- SEÇÃO EXPLICATIVA -->
-    <section class="calc-info">
-      <h2>Por que converter taxas?</h2>
-      <p>
-        Cada investimento ou financiamento pode usar uma base de tempo diferente: uma taxa pode ser mensal,
-        outra anual, ou até diária. Para comparar de forma justa, é essencial converter todas para o mesmo período.
-      </p>
+      <p id="err" style="display:none;margin:12px 0 0;color:#b00020;"></p>
 
-      <h3>Como funciona esta calculadora</h3>
-      <p>
-        A ferramenta transforma a taxa informada no período de origem para as demais equivalentes,
-        usando a base de dias selecionada (252 dias úteis ou 365 dias corridos).
-        Assim, você pode comparar investimentos, empréstimos e rendimentos de forma precisa.
-      </p>
+      <div id="out" style="display:none;margin-top:14px;">
+        <h2 style="font-size:16px;margin:10px 0;">Resultado</h2>
 
-      <h3>Exemplo prático</h3>
-      <p>
-        Uma taxa de 1% ao mês equivale a cerca de 12,68% ao ano, considerando juros compostos.
-        Essa diferença é importante para avaliar rendimentos e custos financeiros corretamente.
-      </p>
+        <div style="overflow:auto;">
+          <table style="width:100%;border-collapse:collapse;min-width:540px;">
+            <thead>
+              <tr>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:10px;">Período</th>
+                <th style="text-align:right;border-bottom:1px solid #eee;padding:10px;">Taxa equivalente</th>
+                <th style="text-align:right;border-bottom:1px solid #eee;padding:10px;">Frequência/ano</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
 
-      <h3>Dica</h3>
-      <ul>
-        <li>Use <strong>base 252</strong> para o mercado financeiro (CDB, Tesouro, etc.).</li>
-        <li>Use <strong>base 365</strong> para comparações em juros de empréstimos ou financiamentos.</li>
-      </ul>
+        <p style="margin:12px 0 0;opacity:.75;font-size:13px;">
+          Base padrão: <b>365 dias/ano</b>. Conversão por equivalência em juros compostos.
+        </p>
+      </div>
     </section>
+
+    <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
   </main>
 
-  <footer class="footer">© 2025 · Calcsy</footer>
+<script>
+  const periods = {
+    daily:      { label: "Diário",     freqPerYear: 365 },
+    monthly:    { label: "Mensal",     freqPerYear: 12  },
+    bimonthly:  { label: "Bimestral",  freqPerYear: 6   },
+    quarterly:  { label: "Trimestral", freqPerYear: 4   },
+    semiannual: { label: "Semestral",  freqPerYear: 2   },
+    annual:     { label: "Anual",      freqPerYear: 1   }
+  };
 
-  <script src="menu.js"></script>
+  const $ = (id) => document.getElementById(id);
 
-  <script>
-    function converterTaxa() {
-      const taxa = parseFloat(document.getElementById('tx-origem').value) / 100;
-      const origem = document.getElementById('periodo-origem').value;
-      const base = parseInt(document.getElementById('base-dias').value);
+  function parsePct(v) {
+    if (!v) return NaN;
+    const cleaned = String(v).trim().replace(/\s/g, "").replace(",", ".");
+    return Number(cleaned);
+  }
 
-      let diaria;
-      if (origem === 'dia') diaria = taxa;
-      else if (origem === 'mes') diaria = Math.pow(1 + taxa, 1 / 21) - 1;
-      else diaria = Math.pow(1 + taxa, 1 / base) - 1;
+  function fmtPct(decimalRate) {
+    const pct = decimalRate * 100;
+    // 6 casas é “preciso o suficiente” sem virar novela
+    return pct.toFixed(6).replace(".", ",") + "%";
+  }
 
-      const mensal = (Math.pow(1 + diaria, 21) - 1) * 100;
-      const anual = (Math.pow(1 + diaria, base) - 1) * 100;
-      const diariaPct = diaria * 100;
+  function showError(msg) {
+    $("err").textContent = msg;
+    $("err").style.display = "block";
+    $("out").style.display = "none";
+  }
 
-      document.getElementById('tx-resultado').innerHTML = `
-        <h2>Taxas equivalentes</h2>
-        <p><strong>Ao dia:</strong> ${diariaPct.toFixed(5)}%</p>
-        <p><strong>Ao mês:</strong> ${mensal.toFixed(3)}%</p>
-        <p><strong>Ao ano:</strong> ${anual.toFixed(2)}%</p>
-      `;
-    }
+  function clearError() {
+    $("err").textContent = "";
+    $("err").style.display = "none";
+  }
 
-    window.addEventListener('DOMContentLoaded', converterTaxa);
-  </script>
+  function compute() {
+    clearError();
+
+    const ratePct = parsePct($("rate").value);
+    const originKey = $("origin").value;
+
+    if (!Number.isFinite(ratePct)) return showError("Informe uma taxa válida (ex: 2,5).");
+    const iOrigin = ratePct / 100;
+    if (iOrigin <= -1) return showError("A taxa não pode ser menor ou igual a -100%.");
+
+    const origin = periods[originKey];
+    if (!origin) return showError("Período de origem inválido.");
+
+    const tbody = $("tbody");
+    tbody.innerHTML = "";
+
+    // Conversão direta:
+    // i_target = (1 + i_origin)^(freq_origin / freq_target) - 1
+    const base = 1 + iOrigin;
+    if (base <= 0) return showError("Taxa inválida para conversão (base <= 0).");
+
+    Object.entries(periods).forEach(([key, p]) => {
+      const power = origin.freqPerYear / p.freqPerYear;
+      const iTarget = Math.pow(base, power) - 1;
+
+      const tr = document.createElement("tr");
+
+      const td1 = document.createElement("td");
+      td1.textContent = p.label;
+      td1.style.padding = "10px";
+      td1.style.borderBottom = "1px solid #f2f2f2";
+
+      const td2 = document.createElement("td");
+      td2.textContent = fmtPct(iTarget);
+      td2.style.padding = "10px";
+      td2.style.textAlign = "right";
+      td2.style.borderBottom = "1px solid #f2f2f2";
+
+      const td3 = document.createElement("td");
+      td3.textContent = String(p.freqPerYear);
+      td3.style.padding = "10px";
+      td3.style.textAlign = "right";
+      td3.style.borderBottom = "1px solid #f2f2f2";
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tbody.appendChild(tr);
+    });
+
+    $("out").style.display = "block";
+  }
+
+  $("calc").addEventListener("click", compute);
+  $("rate").addEventListener("keydown", (e) => { if (e.key === "Enter") compute(); });
+</script>
 </body>
 </html>
