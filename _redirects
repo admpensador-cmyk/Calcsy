@@ -1,10 +1,10 @@
-# 1) Forçar domínio primário (apex -> www)
+# 1) Forcar dominio primario (apex -> www)
 https://calcsy.com.br/*  https://www.calcsy.com.br/:splat  301!
 
-# 2) /obrigado (pretty URL servindo o arquivo .html sem mudar a URL)
+# 2) /obrigado (pretty URL servindo o arquivo .html)
 /obrigado   /obrigado.html  200
 /obrigado/  /obrigado.html  200
 
 # 3) Remover .html (canonical)
-/index.html   /         301!
-/:splat.html  /:splat   301!
+/index.html   /        301!
+/:splat.html  /:splat  301!
