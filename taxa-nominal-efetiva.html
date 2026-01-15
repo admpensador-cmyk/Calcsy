@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nominal x Efetiva | Calcsy</title>
+  <meta name="description" content="Converta taxa efetiva por período para nominal anual e o inverso. Útil para comparar taxas." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+      <a href="/trade.html" style="text-decoration:none;">Trade</a>
+      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+      <a href="/termos.html" style="text-decoration:none;">Termos</a>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+  <h1 style="margin:14px 0 6px;">Conversor: Nominal ↔ Efetiva</h1>
+  <p style="margin:0 0 16px;opacity:.85">
+    Use para comparar taxas com períodos diferentes. Base padrão: 365 dias/ano.
+  </p>
+
+  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+    <label style="display:block;max-width:520px;">
+      <div style="font-size:13px;margin-bottom:6px;">Modo</div>
+      <select id="modo" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+        <option value="eff_to_nom" selected>Efetiva por período → Nominal anual</option>
+        <option value="nom_to_eff">Nominal anual → Efetiva por período</option>
+      </select>
+    </label>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;">
+      <label style="flex:1;min-width:240px;">
+        <div id="lblTaxa" style="font-size:13px;margin-bottom:6px;">Taxa efetiva (%)</div>
+        <input id="taxa" inputmode="decimal" placeholder="Ex.: 1,5"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Período</div>
+        <select id="periodo" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+          <option value="daily">Diário (365/ano)</option>
+          <option value="monthly" selected>Mensal (12/ano)</option>
+          <option value="bimonthly">Bimestral (6/ano)</option>
+          <option value="quarterly">Trimestral (4/ano)</option>
+          <option value="semiannual">Semestral (2/ano)</option>
+          <option value="annual">Anual (1/ano)</option>
+        </select>
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+      <button id="btn" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">Converter</button>
+      <button id="clr" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">Limpar</button>
+    </div>
+
+    <div id="out" style="margin-top:14px;display:none;">
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div id="lblOut" style="font-size:12px;opacity:.7;">Resultado</div>
+          <div id="res" style="font-size:20px;font-weight:800;">—</div>
+        </div>
+        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Cálculo</div>
+          <div id="calc" style="font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+</main>
+
+<script>
+  const periods = {
+    daily:{label:"Diário", f:365}, monthly:{label:"Mensal", f:12}, bimonthly:{label:"Bimestral", f:6},
+    quarterly:{label:"Trimestral", f:4}, semiannual:{label:"Semestral", f:2}, annual:{label:"Anual", f:1}
+  };
+
+  function parseBR(v){ if(!v) return NaN; return Number(String(v).trim().replace(/\./g,"").replace(",", ".")); }
+  function fmtPct(x){ return (x*100).toFixed(6).replace(".", ",") + "%"; }
+
+  function syncLabels(){
+    const modo = document.getElementById("modo").value;
+    document.getElementById("lblTaxa").textContent = (modo==="eff_to_nom") ? "Taxa efetiva (%)" : "Taxa nominal anual (%)";
+    document.getElementById("lblOut").textContent = (modo==="eff_to_nom") ? "Nominal anual" : "Efetiva do período";
+  }
+
+  function convert(){
+    const modo = document.getElementById("modo").value;
+    const taxa = parseBR(document.getElementById("taxa").value);
+    const pKey = document.getElementById("periodo").value;
+    const p = periods[pKey];
+    if(!p || !isFinite(taxa)){ alert("Preencha a taxa corretamente."); return; }
+
+    const f = p.f;
+    const t = taxa/100;
+
+    if(modo==="eff_to_nom"){
+      // nominal anual aproximada: i_nom = i_eff * f
+      const nom = t * f;
+      // também mostramos efetiva anual equivalente: (1+i_eff)^f - 1
+      const effAnual = Math.pow(1+t, f) - 1;
+      document.getElementById("res").textContent = fmtPct(nom);
+      document.getElementById("calc").textContent =
+        `Nominal anual ≈ i_eff×f = ${t.toFixed(6)}×${f} = ${nom.toFixed(8)}\nEfetiva anual equivalente = (1+i_eff)^f − 1 = ${(effAnual).toFixed(8)}`;
+    } else {
+      // dado nominal anual t, estimamos taxa por período como t/f (nominal), e a efetiva do período equivalente usando efetiva anual:
+      // Se "nominal anual" for interpretada como taxa nominal com capitalização f: i_periodo = t/f e efetiva anual = (1+i_periodo)^f - 1.
+      const iPer = t / f;
+      document.getElementById("res").textContent = fmtPct(iPer);
+      const effAnual = Math.pow(1+iPer, f) - 1;
+      document.getElementById("calc").textContent =
+        `Efetiva do período (capitalização ${f}/ano): i = i_nom/f = ${t.toFixed(6)}/${f} = ${iPer.toFixed(8)}\nEfetiva anual equivalente = (1+i)^f − 1 = ${(effAnual).toFixed(8)}`;
+    }
+
+    document.getElementById("out").style.display="block";
+  }
+
+  function clr(){
+    document.getElementById("taxa").value="";
+    document.getElementById("out").style.display="none";
+  }
+
+  document.getElementById("modo").addEventListener("change", syncLabels);
+  document.getElementById("btn").addEventListener("click", convert);
+  document.getElementById("clr").addEventListener("click", clr);
+  syncLabels();
+</script>
+</body>
+</html>

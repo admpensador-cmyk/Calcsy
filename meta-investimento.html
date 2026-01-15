@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meta de investimento | Calcsy</title>
+  <meta name="description" content="Calcule o aporte mensal necessário para atingir uma meta. Informe meta (FV), valor inicial (PV), taxa ao mês e prazo em meses." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+      <a href="/trade.html" style="text-decoration:none;">Trade</a>
+      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+      <a href="/termos.html" style="text-decoration:none;">Termos</a>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+  <h1 style="margin:14px 0 6px;">Meta de investimento (aporte mensal)</h1>
+  <p style="margin:0 0 16px;opacity:.85">
+    Encontre o aporte mensal (PMT) para chegar numa meta (FV) com taxa mensal.
+  </p>
+
+  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Meta (FV) em R$</div>
+        <input id="fv" inputmode="decimal" placeholder="Ex.: 20000"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Valor inicial (PV) em R$</div>
+        <input id="pv" inputmode="decimal" placeholder="Ex.: 1000"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Taxa ao mês (%)</div>
+        <input id="i" inputmode="decimal" placeholder="Ex.: 1"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Prazo (meses)</div>
+        <input id="n" inputmode="numeric" placeholder="Ex.: 36"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+      <button id="btn" type="button"
+        style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+        Calcular
+      </button>
+      <button id="clr" type="button"
+        style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">
+        Limpar
+      </button>
+    </div>
+
+    <div id="out" style="margin-top:14px;display:none;">
+      <hr style="border:

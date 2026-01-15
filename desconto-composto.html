@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Desconto Composto | Calcsy</title>
+  <meta name="description" content="Calcule desconto composto: A = N/(1+i)^n e D = N - A. Informe valor nominal, taxa e tempo." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+      <a href="/trade.html" style="text-decoration:none;">Trade</a>
+      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+      <a href="/termos.html" style="text-decoration:none;">Termos</a>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+  <h1 style="margin:14px 0 6px;">Desconto Composto</h1>
+  <p style="margin:0 0 16px;opacity:.85">
+    Fórmulas: <b>A = N/(1+i)^n</b> e <b>D = N − A</b>.
+  </p>
+
+  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <label style="flex:1;min-width:220px;">
+        <div style="font-size:13px;margin-bottom:6px;">Valor nominal (N) em R$</div>
+        <input id="N" inputmode="decimal" placeholder="Ex.: 1000"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+      <label style="flex:1;min-width:220px;">
+        <div style="font-size:13px;margin-bottom:6px;">Taxa i (% por período)</div>
+        <input id="i" inputmode="decimal" placeholder="Ex.: 2,0"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+      <label style="flex:1;min-width:220px;">
+        <div style="font-size:13px;margin-bottom:6px;">Tempo (n)</div>
+        <input id="n" inputmode="decimal" placeholder="Ex.: 12"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+      <button id="btn" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">Calcular</button>
+      <button id="clr" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">Limpar</button>
+    </div>
+
+    <div id="out" style="margin-top:14px;display:none;">
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Valor Atual (A)</div>
+          <div id="Aout" style="font-size:20px;font-weight:800;">—</div>
+        </div>
+        <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Desconto (D)</div>
+          <div id="Dout" style="font-size:20px;font-weight:800;">—</div>
+        </div>
+        <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Cálculo</div>
+          <div id="calc" style="font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+</main>
+
+<script>
+  function parseBR(v){ if(!v) return NaN; return Number(String(v).trim().replace(/\./g,"").replace(",", ".")); }
+  const fmt = new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+  function calc(){
+    const N = parseBR(document.getElementById("N").value);
+    const ip = parseBR(document.getElementById("i").value);
+    const n  = parseBR(document.getElementById("n").value);
+    if(!isFinite(N)||!isFinite(ip)||!isFinite(n)||N<0||n<0){ alert("Preencha os valores corretamente."); return; }
+    const i = ip/100;
+    const A = N / Math.pow(1+i, n);
+    const D = N - A;
+    document.getElementById("Aout").textContent = fmt.format(A);
+    document.getElementById("Dout").textContent = fmt.format(D);
+    document.getElementById("calc").textContent =
+      `A = N/(1+i)^n = ${N.toFixed(2)}/(1+${i.toFixed(6)})^${n} = ${A.toFixed(2)}\nD = N − A = ${N.toFixed(2)} − ${A.toFixed(2)} = ${D.toFixed(2)}`;
+    document.getElementById("out").style.display="block";
+  }
+  function clr(){
+    ["N","i","n"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("out").style.display="none";
+  }
+  document.getElementById("btn").addEventListener("click", calc);
+  document.getElementById("clr").addEventListener("click", clr);
+</script>
+</body>
+</html>

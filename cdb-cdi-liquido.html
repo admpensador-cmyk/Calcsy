@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CDB/CDI líquido | Calcsy</title>
+  <meta name="description" content="Calcule rendimento bruto e líquido em CDB atrelado ao CDI. Informe valor, % do CDI, CDI anual e prazo em dias. Aplica IR e IOF regressivos." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+      <a href="/trade.html" style="text-decoration:none;">Trade</a>
+      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+      <a href="/termos.html" style="text-decoration:none;">Termos</a>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+  <h1 style="margin:14px 0 6px;">CDB/CDI líquido</h1>
+  <p style="margin:0 0 16px;opacity:.85">
+    Informe valor, <b>% do CDI</b>, <b>CDI anual</b> e <b>prazo em dias</b>. O cálculo aplica IR/IOF regressivos. :contentReference[oaicite:4]{index=4}
+  </p>
+
+  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Valor aplicado (principal) em R$</div>
+        <input id="pv" inputmode="decimal" placeholder="Ex.: 5000"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">% do CDI</div>
+        <input id="pcdi" inputmode="decimal" placeholder="Ex.: 110"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">CDI anual (%)</div>
+        <input id="cdi" inputmode="decimal" placeholder="Ex.: 11,75"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Prazo (dias)</div>
+        <input id="dias" inputmode="numeric" placeholder="Ex.: 180"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+      <button id="btn" type="button"
+        style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+        Calcular
+      </button>
+      <button id="clr" type="button"
+        style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">
+        Limpar
+      </button>
+    </div>
+
+    <div id="out" style="margin-top:14px;display:none;">
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:260px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Resultado</div>
+          <div id="res" style="margin-top:2px;font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
+        </div>
+        <div style="flex:1;min-width:260px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Líquido</div>
+          <div id="liq" style="font-size:20px;font-weight:800;">—</div>
+          <div id="liq2" style="margin-top:6px;font-size:13px;opacity:.9;">—</div>
+        </div>
+      </div>
+
+      <p style="margin:12px 0 0;opacity:.7;font-size:12px;">
+        Método: taxa anual efetiva aproximada proporcional ao CDI e capitalização por dias (base 365).
+      </p>
+    </div>
+  </section>
+
+  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+</main>
+
+<script>
+  function parseBR(v){
+    if(!v) return NaN;
+    return Number(String(v).trim().replace(/\./g,"").replace(",", "."));
+  }
+  const fmt = new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+
+  const iofPct = [
+    0,
+    0.96,0.93,0.90,0.86,0.83,0.80,0.76,0.73,0.70,0.66,
+    0.63,0.60,0.56,0.53,0.50,0.46,0.43,0.40,0.36,0.33,
+    0.30,0.26,0.23,0.20,0.16,0.13,0.10,0.06,0.03
+  ];
+
+  function irRate(days){
+    if(days <= 180) return 0.225;
+    if(days <= 360) return 0.20;
+    if(days <= 720) return 0.175;
+    return 0.15;
+  }
+
+  function calc(){
+    const PV   = parseBR(document.getElementById("pv").value);
+    const pCDI = parseBR(document.getElementById("pcdi").value);
+    const cdiA = parseBR(document.getElementById("cdi").value);
+    const dias = parseBR(document.getElementById("dias").value);
+
+    if(!isFinite(PV)||PV<=0||!isFinite(pCDI)||pCDI<=0||!isFinite(cdiA)||cdiA<0||!isFinite(dias)||dias<0){
+      alert("Preencha todos os campos com valores válidos.");
+      return;
+    }
+
+    const d = Math.floor(dias);
+
+    // taxa anual efetiva aproximada do CDB: cdiA * (pCDI/100)
+    const taxaAnual = (cdiA/100) * (pCDI/100);
+
+    // capitalização por dias (base 365)
+    const fator = Math.pow(1 + taxaAnual, d/365);
+    const montanteBruto = PV * fator;
+    const rendimentoBruto = montanteBruto - PV;
+
+    const iof = (d >= 1 && d <= 29) ? (rendimentoBruto * iofPct[d]) : 0;
+    const baseIR = Math.max(0, rendimentoBruto - iof);
+    const ir = baseIR * irRate(d);
+    const rendimentoLiquido = rendimentoBruto - iof - ir;
+    const montanteLiquido = PV + rendimentoLiquido;
+
+    document.getElementById("res").textContent =
+      "Montante bruto: " + fmt.format(montanteBruto) + "\n" +
+      "Rendimento bruto: " + fmt.format(rendimentoBruto) + "\n" +
+      "IOF: " + fmt.format(iof) + "\n" +
+      "IR: " + fmt.format(ir);
+
+    document.getElementById("liq").textContent = fmt.format(montanteLiquido);
+    document.getElementById("liq2").textContent = "Rendimento líquido: " + fmt.format(rendimentoLiquido);
+
+    document.getElementById("out").style.display = "block";
+  }
+
+  function clr(){
+    ["pv","pcdi","cdi","dias"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("out").style.display = "none";
+  }
+
+  document.getElementById("btn").addEventListener("click", calc);
+  document.getElementById("clr").addEventListener("click", clr);
+</script>
+</body>
+</html>

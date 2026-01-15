@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Taxa Real (Inflação) | Calcsy</title>
+  <meta name="description" content="Calcule a taxa real: (1+nominal)/(1+inflação) - 1. Informe taxa nominal e inflação em %." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+      <a href="/" style="text-decoration:none;">Início</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+      <a href="/trade.html" style="text-decoration:none;">Trade</a>
+      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+      <a href="/termos.html" style="text-decoration:none;">Termos</a>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+  <h1 style="margin:14px 0 6px;">Taxa Real (ajustada pela inflação)</h1>
+  <p style="margin:0 0 16px;opacity:.85">
+    Fórmula: <b>taxa real = (1+nominal)/(1+inflação) − 1</b>.
+  </p>
+
+  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Taxa nominal (%)</div>
+        <input id="nom" inputmode="decimal" placeholder="Ex.: 12"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+      <label style="flex:1;min-width:240px;">
+        <div style="font-size:13px;margin-bottom:6px;">Inflação (%)</div>
+        <input id="inf" inputmode="decimal" placeholder="Ex.: 4,5"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+      <button id="btn" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">Calcular</button>
+      <button id="clr" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">Limpar</button>
+    </div>
+
+    <div id="out" style="margin-top:14px;display:none;">
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Taxa real</div>
+          <div id="realOut" style="font-size:20px;font-weight:800;">—</div>
+        </div>
+        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
+          <div style="font-size:12px;opacity:.7;">Cálculo</div>
+          <div id="calc" style="font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+</main>
+
+<script>
+  function parseBR(v){ if(!v) return NaN; return Number(String(v).trim().replace(/\./g,"").replace(",", ".")); }
+  function fmtPct(x){ return (x*100).toFixed(6).replace(".", ",") + "%"; }
+  function calc(){
+    const nom = parseBR(document.getElementById("nom").value);
+    const inf = parseBR(document.getElementById("inf").value);
+    if(!isFinite(nom)||!isFinite(inf)){ alert("Preencha os valores corretamente."); return; }
+    const n = nom/100, f = inf/100;
+    if(1+f <= 0){ alert("Inflação inválida."); return; }
+    const real = (1+n)/(1+f) - 1;
+    document.getElementById("realOut").textContent = fmtPct(real);
+    document.getElementById("calc").textContent =
+      `real = (1+${n.toFixed(6)})/(1+${f.toFixed(6)}) − 1 = ${real.toFixed(8)}`;
+    document.getElementById("out").style.display="block";
+  }
+  function clr(){
+    ["nom","inf"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("out").style.display="none";
+  }
+  document.getElementById("btn").addEventListener("click", calc);
+  document.getElementById("clr").addEventListener("click", clr);
+</script>
+</body>
+</html>

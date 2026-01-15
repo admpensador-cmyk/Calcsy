@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Juros Simples | Calcsy</title>
+  <meta name="description" content="Calcule juros simples: juros (J) e montante (M). Informe capital, taxa e tempo. Fórmula: J = C*i*n; M = C + J." />
+
+  <!-- Se você já tem o snippet do AdSense nas outras páginas, cole aqui também -->
+</head>
+
+<body>
+  <header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+      <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+        <a href="/" style="text-decoration:none;">Início</a>
+        <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+        <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+        <a href="/trade.html" style="text-decoration:none;">Trade</a>
+        <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+        <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+        <a href="/termos.html" style="text-decoration:none;">Termos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
+    <h1 style="margin:14px 0 6px;">Juros Simples</h1>
+    <p style="margin:0 0 16px;opacity:.85">
+      Fórmulas: <b>J = C × i × n</b> e <b>M = C + J</b> (onde i é a taxa por período e n é o número de períodos).
+    </p>
+
+    <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <label style="flex:1;min-width:220px;">
+          <div style="font-size:13px;margin-bottom:6px;">Capital (C) em R$</div>
+          <input id="capital" inputmode="decimal" placeholder="Ex.: 1000"
+            style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+        </label>
+
+        <label style="flex:1;min-width:220px;">
+          <div style="font-size:13px;margin-bottom:6px;">Taxa i (% por período)</div>
+          <input id="taxa" inputmode="decimal" placeholder="Ex.: 2,5"
+            style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+        </label>
+
+        <label style="flex:1;min-width:220px;">
+          <div style="font-size:13px;margin-bottom:6px;">Tempo (n)</div>
+          <input id="tempo" inputmode="decimal" placeholder="Ex.: 12"
+            style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+          <div style="opacity:.65;font-size:12px;margin-top:6px;">
+            Dica: se a taxa é ao mês, o tempo deve estar em meses.
+          </div>
+        </label>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+        <button id="btnCalc" type="button"
+          style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+          Calcular
+        </button>
+        <button id="btnLimpar" type="button"
+          style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">
+          Limpar
+        </button>
+      </div>
+
+      <div id="resultado" style="margin-top:14px;display:none;">
+        <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+            <div style="font-size:12px;opacity:.7;">Juros (J)</div>
+            <div id="jurosOut" style="font-size:20px;font-weight:800;">—</div>
+          </div>
+          <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+            <div style="font-size:12px;opacity:.7;">Montante (M)</div>
+            <div id="montanteOut" style="font-size:20px;font-weight:800;">—</div>
+          </div>
+          <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
+            <div style="font-size:12px;opacity:.7;">Cálculo</div>
+            <div id="calcOut" style="font-size:13px;opacity:.9;line-height:1.35;">—</div>
+          </div>
+        </div>
+
+        <p style="margin:12px 0 0;opacity:.7;font-size:12px;">
+          Aviso: resultado aproximado. Confirme o “período” da taxa e do tempo (mês/ano/dia).
+        </p>
+      </div>
+    </section>
+
+    <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+  </main>
+
+  <script>
+    function parseBRNumber(v) {
+      if (!v) return NaN;
+      // aceita "1.234,56" e "1234.56"
+      const s = String(v).trim().replace(/\./g, "").replace(",", ".");
+      return Number(s);
+    }
+
+    const fmtBRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+
+    function calcular() {
+      const C = parseBRNumber(document.getElementById("capital").value);
+      const taxaPct = parseBRNumber(document.getElementById("taxa").value);
+      const n = parseBRNumber(document.getElementById("tempo").value);
+
+      if (!isFinite(C) || !isFinite(taxaPct) || !isFinite(n) || C < 0 || n < 0) {
+        alert("Preencha Capital, Taxa e Tempo com valores válidos.");
+        return;
+      }
+
+      const i = taxaPct / 100;
+      const J = C * i * n;
+      const M = C + J;
+
+      document.getElementById("jurosOut").textContent = fmtBRL.format(J);
+      document.getElementById("montanteOut").textContent = fmtBRL.format(M);
+
+      const calcTxt = `J = ${C.toFixed(2)} × ${(i).toFixed(6)} × ${n} = ${J.toFixed(2)}\nM = C + J = ${C.toFixed(2)} + ${J.toFixed(2)} = ${M.toFixed(2)}`;
+      document.getElementById("calcOut").textContent = calcTxt;
+
+      document.getElementById("resultado").style.display = "block";
+    }
+
+    function limpar() {
+      ["capital","taxa","tempo"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("resultado").style.display = "none";
+    }
+
+    document.getElementById("btnCalc").addEventListener("click", calcular);
+    document.getElementById("btnLimpar").addEventListener("click", limpar);
+  </script>
+</body>
+</html>
