@@ -1,92 +1,145 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Taxa Real (Inflação) | Calcsy</title>
-  <meta name="description" content="Calcule a taxa real: (1+nominal)/(1+inflação) - 1. Informe taxa nominal e inflação em %." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Taxa Real – Calcsy</title>
+  <meta name="description" content="Calcule a taxa real descontando a inflação. Compare taxa nominal e inflação no mesmo período e veja o ganho real do seu investimento.">
+  <link rel="canonical" href="https://www.calcsy.com.br/taxa-real.html">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Taxa Real",
+    "url": "https://www.calcsy.com.br/taxa-real.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule a taxa real (ganho acima da inflação) a partir da taxa nominal e da inflação do período."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanças", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Taxa Real", "item": "https://www.calcsy.com.br/taxa-real.html" }
+    ]
+  }
+  </script>
+
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
-    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
-      <a href="/" style="text-decoration:none;">Início</a>
-      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
-      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
-      <a href="/trade.html" style="text-decoration:none;">Trade</a>
-      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
-      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
-      <a href="/termos.html" style="text-decoration:none;">Termos</a>
-    </nav>
-  </div>
-</header>
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
 
-<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
-  <h1 style="margin:14px 0 6px;">Taxa Real (ajustada pela inflação)</h1>
-  <p style="margin:0 0 16px;opacity:.85">
-    Fórmula: <b>taxa real = (1+nominal)/(1+inflação) − 1</b>.
-  </p>
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index.html">Início</a>
+    <a href="financas.html">Finanças</a>
+  </nav>
 
-  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
-    <div style="display:flex;flex-wrap:wrap;gap:12px;">
-      <label style="flex:1;min-width:240px;">
-        <div style="font-size:13px;margin-bottom:6px;">Taxa nominal (%)</div>
-        <input id="nom" inputmode="decimal" placeholder="Ex.: 12"
-          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+  <main class="page">
+    <a href="financas.html" class="back-link">← Voltar</a>
+    <h1>Calculadora de Taxa Real</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Taxa nominal (% no período)
+        <input type="number" id="tr-nominal" value="12" step="0.01">
       </label>
-      <label style="flex:1;min-width:240px;">
-        <div style="font-size:13px;margin-bottom:6px;">Inflação (%)</div>
-        <input id="inf" inputmode="decimal" placeholder="Ex.: 4,5"
-          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+
+      <label>Inflação (% no período)
+        <input type="number" id="tr-inflacao" value="6" step="0.01">
       </label>
-    </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
-      <button id="btn" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">Calcular</button>
-      <button id="clr" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">Limpar</button>
-    </div>
+      <button type="button" onclick="calcularTR()">Calcular</button>
+    </form>
 
-    <div id="out" style="margin-top:14px;display:none;">
-      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
-      <div style="display:flex;flex-wrap:wrap;gap:12px;">
-        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
-          <div style="font-size:12px;opacity:.7;">Taxa real</div>
-          <div id="realOut" style="font-size:20px;font-weight:800;">—</div>
-        </div>
-        <div style="flex:1;min-width:240px;border:1px solid #eee;border-radius:12px;padding:12px;">
-          <div style="font-size:12px;opacity:.7;">Cálculo</div>
-          <div id="calc" style="font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="result" id="tr-resultado"></div>
 
-  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
-</main>
+    <section class="calc-info">
+      <h2>Como funciona esta calculadora?</h2>
+      <p>
+        Ela calcula a <strong>taxa real</strong>, que é o ganho do investimento <strong>acima da inflação</strong>.
+        Em outras palavras: quanto o seu dinheiro aumentou (ou diminuiu) em <strong>poder de compra</strong>.
+      </p>
 
-<script>
-  function parseBR(v){ if(!v) return NaN; return Number(String(v).trim().replace(/\./g,"").replace(",", ".")); }
-  function fmtPct(x){ return (x*100).toFixed(6).replace(".", ",") + "%"; }
-  function calc(){
-    const nom = parseBR(document.getElementById("nom").value);
-    const inf = parseBR(document.getElementById("inf").value);
-    if(!isFinite(nom)||!isFinite(inf)){ alert("Preencha os valores corretamente."); return; }
-    const n = nom/100, f = inf/100;
-    if(1+f <= 0){ alert("Inflação inválida."); return; }
-    const real = (1+n)/(1+f) - 1;
-    document.getElementById("realOut").textContent = fmtPct(real);
-    document.getElementById("calc").textContent =
-      `real = (1+${n.toFixed(6)})/(1+${f.toFixed(6)}) − 1 = ${real.toFixed(8)}`;
-    document.getElementById("out").style.display="block";
-  }
-  function clr(){
-    ["nom","inf"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("out").style.display="none";
-  }
-  document.getElementById("btn").addEventListener("click", calc);
-  document.getElementById("clr").addEventListener("click", clr);
-</script>
+      <h3>Fórmula usada</h3>
+      <p>
+        <strong>Taxa real = (1 + nominal) / (1 + inflação) − 1</strong>
+      </p>
+      <p>
+        Essa forma é mais correta do que apenas subtrair as taxas quando os valores são maiores.
+      </p>
+
+      <h3>O que significam os campos?</h3>
+      <ul>
+        <li><strong>Taxa nominal:</strong> rentabilidade “bruta” no período (ex.: ao ano, ao mês, etc.).</li>
+        <li><strong>Inflação:</strong> inflação do mesmo período (ex.: IPCA anual, IPCA mensal, etc.).</li>
+      </ul>
+
+      <h3>Dica importante</h3>
+      <p>
+        As duas taxas precisam ser do <strong>mesmo período</strong>.
+        Ex.: nominal anual com inflação anual. Se misturar períodos, o resultado fica errado.
+      </p>
+
+      <h3>Como ler o resultado</h3>
+      <p>
+        Se a taxa real for <strong>positiva</strong>, você ganhou poder de compra.
+        Se for <strong>negativa</strong>, seu dinheiro não acompanhou a inflação naquele período.
+      </p>
+
+      <p>
+        ⚠️ Esta calculadora não inclui impostos (IR/IOF) ou taxas. Use como referência para comparação.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatPct(v){
+      return (v * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+    }
+
+    function calcularTR() {
+      const nominalPct = parseFloat(document.getElementById('tr-nominal').value) || 0;
+      const inflacaoPct = parseFloat(document.getElementById('tr-inflacao').value) || 0;
+
+      const nominal = nominalPct / 100;
+      const inflacao = inflacaoPct / 100;
+
+      const taxaReal = ((1 + nominal) / (1 + inflacao)) - 1;
+
+      document.getElementById('tr-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>Taxa real:</strong> ${formatPct(taxaReal)}</p>
+        <p><strong>Cálculo:</strong> (1 + ${nominal.toFixed(6)}) / (1 + ${inflacao.toFixed(6)}) − 1</p>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularTR);
+  </script>
 </body>
 </html>

@@ -190,3 +190,130 @@ body {
   .nav { display: none; }
   .menu-toggle { display: block; }
 }
+
+/* =========================
+   CALCSY · Padrão Calculadoras
+   ========================= */
+
+.page-title {
+  margin: 18px 0 6px;
+}
+
+.page-lead {
+  margin: 0 0 16px;
+  opacity: 0.85;
+  max-width: 70ch;
+}
+
+.calc-box {
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  padding: 16px;
+  background: #fff;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.calc-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.calc-field input,
+.calc-field select,
+.calc-field textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.calc-field input:focus,
+.calc-field select:focus,
+.calc-field textarea:focus {
+  border-color: #111;
+}
+
+.calc-hint {
+  font-size: 12px;
+  opacity: 0.65;
+  margin-top: 6px;
+}
+
+.calc-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 11px 16px;
+  border: 1px solid #111;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: #111;
+  color: #fff;
+}
+
+.result-box {
+  margin-top: 14px;
+  border-top: 1px solid #eee;
+  padding-top: 14px;
+}
+
+.result-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.result-card {
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.result-title {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+
+.result-value {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.result-text {
+  white-space: pre-line;
+  line-height: 1.35;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.page-note {
+  margin-top: 12px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .calc-grid { grid-template-columns: 1fr; }
+  .result-cards { grid-template-columns: 1fr; }
+}

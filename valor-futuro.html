@@ -1,95 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Valor Futuro (FV) | Calcsy</title>
-  <meta name="description" content="Calcule Valor Futuro (FV): FV = PV*(1+i)^n. Informe valor presente, taxa e tempo." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Valor Futuro (FV) – Calcsy</title>
+  <meta name="description" content="Calcule o valor futuro (FV) a partir do valor presente (PV), taxa e tempo. Entenda a fórmula e como interpretar o resultado.">
+  <link rel="canonical" href="https://www.calcsy.com.br/valor-futuro.html">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Valor Futuro (FV)",
+    "url": "https://www.calcsy.com.br/valor-futuro.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule o valor futuro (FV) a partir do valor presente (PV), taxa por período e tempo."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanças", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Valor Futuro (FV)", "item": "https://www.calcsy.com.br/valor-futuro.html" }
+    ]
+  }
+  </script>
+
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<header style="max-width:1000px;margin:18px auto 0;padding:0 14px;">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-    <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
-    <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
-      <a href="/" style="text-decoration:none;">Início</a>
-      <a href="/financas.html" style="text-decoration:none;">Finanças</a>
-      <a href="/saude.html" style="text-decoration:none;">Saúde</a>
-      <a href="/trade.html" style="text-decoration:none;">Trade</a>
-      <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
-      <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
-      <a href="/termos.html" style="text-decoration:none;">Termos</a>
-    </nav>
-  </div>
-</header>
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
 
-<main style="max-width:1000px;margin:10px auto 40px;padding:0 14px;">
-  <h1 style="margin:14px 0 6px;">Valor Futuro (FV)</h1>
-  <p style="margin:0 0 16px;opacity:.85">Fórmula: <b>FV = PV × (1+i)^n</b>.</p>
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index.html">Início</a>
+    <a href="financas.html">Finanças</a>
+  </nav>
 
-  <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
-    <div style="display:flex;flex-wrap:wrap;gap:12px;">
-      <label style="flex:1;min-width:220px;">
-        <div style="font-size:13px;margin-bottom:6px;">Valor Presente (PV) em R$</div>
-        <input id="PV" inputmode="decimal" placeholder="Ex.: 3000"
-          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+  <main class="page">
+    <a href="financas.html" class="back-link">← Voltar</a>
+    <h1>Calculadora de Valor Futuro (FV)</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Valor presente (PV) (R$)
+        <input type="number" id="vf-pv" value="1000" step="0.01">
       </label>
-      <label style="flex:1;min-width:220px;">
-        <div style="font-size:13px;margin-bottom:6px;">Taxa i (% por período)</div>
-        <input id="i" inputmode="decimal" placeholder="Ex.: 1,2"
-          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+
+      <label>Taxa por período (%)
+        <input type="number" id="vf-taxa" value="1" step="0.01">
       </label>
-      <label style="flex:1;min-width:220px;">
-        <div style="font-size:13px;margin-bottom:6px;">Tempo (n)</div>
-        <input id="n" inputmode="decimal" placeholder="Ex.: 24"
-          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+
+      <label>Tempo (número de períodos)
+        <input type="number" id="vf-tempo" value="12" step="1">
       </label>
-    </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
-      <button id="btn" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">Calcular</button>
-      <button id="clr" type="button" style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#fff;color:#111;cursor:pointer;">Limpar</button>
-    </div>
+      <button type="button" onclick="calcularVF()">Calcular</button>
+    </form>
 
-    <div id="out" style="margin-top:14px;display:none;">
-      <hr style="border:none;border-top:1px solid #eee;margin:14px 0;">
-      <div style="display:flex;flex-wrap:wrap;gap:12px;">
-        <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
-          <div style="font-size:12px;opacity:.7;">Valor Futuro (FV)</div>
-          <div id="FVout" style="font-size:20px;font-weight:800;">—</div>
-        </div>
-        <div style="flex:1;min-width:220px;border:1px solid #eee;border-radius:12px;padding:12px;">
-          <div style="font-size:12px;opacity:.7;">Cálculo</div>
-          <div id="calc" style="font-size:13px;opacity:.9;white-space:pre-line;line-height:1.35;">—</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="result" id="vf-resultado"></div>
 
-  <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
-</main>
+    <section class="calc-info">
+      <h2>Como funciona esta calculadora?</h2>
+      <p>
+        Ela calcula o <strong>valor futuro (FV)</strong>, que é quanto um valor de hoje pode se tornar
+        no futuro, considerando uma taxa de juros por período.
+      </p>
 
-<script>
-  function parseBR(v){ if(!v) return NaN; return Number(String(v).trim().replace(/\./g,"").replace(",", ".")); }
-  const fmt = new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
-  function calc(){
-    const PV = parseBR(document.getElementById("PV").value);
-    const ip = parseBR(document.getElementById("i").value);
-    const n  = parseBR(document.getElementById("n").value);
-    if(!isFinite(PV)||!isFinite(ip)||!isFinite(n)||PV<0||n<0){ alert("Preencha os valores corretamente."); return; }
-    const i = ip/100;
-    const FV = PV * Math.pow(1+i, n);
-    document.getElementById("FVout").textContent = fmt.format(FV);
-    document.getElementById("calc").textContent =
-      `FV = PV×(1+i)^n = ${PV.toFixed(2)}×(1+${i.toFixed(6)})^${n} = ${FV.toFixed(2)}`;
-    document.getElementById("out").style.display="block";
-  }
-  function clr(){
-    ["PV","i","n"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("out").style.display="none";
-  }
-  document.getElementById("btn").addEventListener("click", calc);
-  document.getElementById("clr").addEventListener("click", clr);
-</script>
+      <h3>Fórmula usada</h3>
+      <p>
+        <strong>FV = PV × (1 + i)<sup>n</sup></strong>, onde:
+      </p>
+      <ul>
+        <li><strong>PV</strong>: valor presente (valor inicial)</li>
+        <li><strong>FV</strong>: valor futuro</li>
+        <li><strong>i</strong>: taxa por período (em decimal)</li>
+        <li><strong>n</strong>: número de períodos</li>
+      </ul>
+
+      <h3>O que significam os campos?</h3>
+      <ul>
+        <li><strong>Valor presente:</strong> o valor que você tem hoje.</li>
+        <li><strong>Taxa por período (%):</strong> taxa do período (mês, ano, etc.).</li>
+        <li><strong>Tempo:</strong> quantos períodos serão considerados.</li>
+      </ul>
+
+      <h3>Dica importante</h3>
+      <p>
+        A taxa e o tempo precisam estar no <strong>mesmo período</strong>.
+        Ex.: se a taxa é ao mês, o tempo deve estar em meses (ou converta).
+      </p>
+
+      <h3>Como ler o resultado</h3>
+      <p>
+        <strong>Valor futuro</strong> é o total ao final do período.
+        Quanto maior a taxa e o tempo, maior tende a ser o FV (efeito da capitalização).
+      </p>
+
+      <p>
+        ⚠️ Esta calculadora não inclui impostos, tarifas ou aportes mensais. Use como estimativa.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    function calcularVF() {
+      const PV = parseFloat(document.getElementById('vf-pv').value) || 0;
+      const taxaPct = parseFloat(document.getElementById('vf-taxa').value) || 0;
+      const n = parseInt(document.getElementById('vf-tempo').value) || 0;
+
+      const i = taxaPct / 100;
+
+      const FV = (i === 0) ? PV : (PV * Math.pow(1 + i, n));
+
+      document.getElementById('vf-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>Valor futuro (FV):</strong> ${formatBRL(FV)}</p>
+        <p><strong>Cálculo:</strong> FV = PV × (1 + i)^n = ${PV.toFixed(2)} × (1 + ${i.toFixed(6)})^${n}</p>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularVF);
+  </script>
 </body>
 </html>
