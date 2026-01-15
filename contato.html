@@ -1,42 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contato – Calcsy</title>
-  <meta name="description" content="Fale com a equipe do Calcsy. Em breve um formulário estará disponível.">
-  <link rel="canonical" href="https://www.calcsy.com.br/contato.html">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.ico">
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HNM92S744Q');
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "Contato",
-    "url": "https://www.calcsy.com.br/contato.html"
-  }
-  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contato · Calcsy</title>
+  <meta name="description" content="Fale com o Calcsy. Envie uma mensagem pelo formulário ou use o e-mail de contato." />
 </head>
+
 <body>
-  <header class="topbar">
-    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+  <header style="max-width:900px;margin:18px auto 0;padding:0 14px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+      <nav style="display:flex;gap:12px;flex-wrap:wrap;font-size:14px;">
+        <a href="/" style="text-decoration:none;">Início</a>
+        <a href="/financas.html" style="text-decoration:none;">Finanças</a>
+        <a href="/saude.html" style="text-decoration:none;">Saúde</a>
+        <a href="/trade.html" style="text-decoration:none;">Trade</a>
+        <a href="/sobre.html" style="text-decoration:none;">Sobre</a>
+        <a href="/privacidade.html" style="text-decoration:none;">Privacidade</a>
+        <a href="/termos.html" style="text-decoration:none;">Termos</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="page">
-    <a href="index.html" class="back-link">← Voltar</a>
-    <h1>Contato</h1>
-    <p>Formulário em breve. Use nosso e-mail quando for disponibilizado nesta página.</p>
-  </main>
+  <main style="max-width:900px;margin:10px auto 40px;padding:0 14px;">
+    <h1 style="margin:14px 0 6px;">Contato</h1>
+    <p style="margin:0 0 16px;opacity:.85">
+      Use o formulário abaixo para falar com a gente. Respondemos pelo e-mail informado.
+    </p>
 
-  <footer class="footer">© 2025 · Calcsy</footer>
+    <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+      <!-- Netlify Forms -->
+      <form name="contato" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contato" />
+        <p style="display:none;">
+          <label>Não preencha: <input name="bot-field" /></label>
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:12px;">
+          <label style="flex:1;min-width:220px;">
+            <div style="font-size:13px;margin-bottom:6px;">Nome</div>
+            <input name="nome" required
+              style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+          </label>
+
+          <label style="flex:1;min-width:260px;">
+            <div style="font-size:13px;margin-bottom:6px;">E-mail</div>
+            <input name="email" type="email" required
+              style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+          </label>
+        </div>
+
+        <label style="display:block;margin-top:12px;">
+          <div style="font-size:13px;margin-bottom:6px;">Mensagem</div>
+          <textarea name="mensagem" rows="6" required
+            style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;resize:vertical;"></textarea>
+        </label>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;">
+          <button type="submit"
+            style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+            Enviar mensagem
+          </button>
+
+          <!-- Fallback com seu e-mail -->
+          <a href="mailto:m2otta.music@gmail.com"
+            style="padding:10px 14px;border:1px solid #111;border-radius:10px;text-decoration:none;color:#111;">
+            Prefiro enviar por e-mail
+          </a>
+        </div>
+
+        <p style="margin:12px 0 0;opacity:.75;font-size:13px;">
+          Alternativa: m2otta.music@gmail.com
+        </p>
+      </form>
+    </section>
+
+    <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+  </main>
 </body>
 </html>
