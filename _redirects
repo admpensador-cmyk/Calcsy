@@ -1,7 +1,23 @@
-# Pretty URL do obrigado
-/obrigado    /obrigado.html  200
-/obrigado/   /obrigado.html  200
+# 0) BLINDAGEM: nunca redirecionar assets (css/js/fontes/imagens)
+# (isso impede /styles.css de cair em qualquer regra e voltar 301)
+/:splat.css   /:splat.css   200!
+/:splat.js    /:splat.js    200!
+/:splat.mjs   /:splat.mjs   200!
+/:splat.map   /:splat.map   200!
+/:splat.svg   /:splat.svg   200!
+/:splat.png   /:splat.png   200!
+/:splat.jpg   /:splat.jpg   200!
+/:splat.jpeg  /:splat.jpeg  200!
+/:splat.webp  /:splat.webp  200!
+/:splat.gif   /:splat.gif   200!
+/:splat.woff2 /:splat.woff2 200!
+/:splat.woff  /:splat.woff  200!
+/:splat.ttf   /:splat.ttf   200!
 
-# Canonical: remover .html (somente para páginas .html)
+# 1) Pretty URL do obrigado
+/obrigado     /obrigado.html  200
+/obrigado/    /obrigado.html  200
+
+# 2) Canonical: remover .html
 /index.html   /        301!
 /:splat.html  /:splat  301!
