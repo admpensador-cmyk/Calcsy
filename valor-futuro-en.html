@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator of Valor Futuro (FV) – Calcsy</title>
+  <meta name="description" content="Calcule o valor futuro (FV) a partir do valor presente (PV), taxa e tempo. Entenda a fórmula e como interpretar o resultado.">
+  <link rel="canonical" href="https://www.calcsy.com.br/valor-futuro-en.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculator of Valor Futuro (FV)",
+    "url": "https://www.calcsy.com.br/valor-futuro.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule o valor futuro (FV) a partir do valor presente (PV), taxa por período e tempo."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finance", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Valor Futuro (FV)", "item": "https://www.calcsy.com.br/valor-futuro.html" }
+    ]
+  }
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="index-en.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index-en.html">Home</a>
+    <a href="financas-en.html">Finance</a>
+  </nav>
+
+  <main class="page">
+    <a href="financas-en.html" class="back-link">← Voltar</a>
+    <h1>Calculator of Valor Futuro (FV)</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Valor presente (PV) (R$)
+        <input type="number" id="vf-pv" value="1000" step="0.01">
+      </label>
+
+      <label>Taxa por período (%)
+        <input type="number" id="vf-taxa" value="1" step="0.01">
+      </label>
+
+      <label>Tempo (número de períodos)
+        <input type="number" id="vf-tempo" value="12" step="1">
+      </label>
+
+      <button type="button" onclick="calcularVF()">Calculate</button>
+    </form>
+
+    <div class="result" id="vf-resultado"></div>
+
+    <section class="calc-info">
+      <h2>How does this calculator work?</h2>
+      <p>
+        Ela calcula o <strong>valor futuro (FV)</strong>, que é quanto um valor de hoje pode se tornar
+        no futuro, considerando uma taxa de juros por período.
+      </p>
+
+      <h3>Fórmula usada</h3>
+      <p>
+        <strong>FV = PV × (1 + i)<sup>n</sup></strong>, onde:
+      </p>
+      <ul>
+        <li><strong>PV</strong>: valor presente (valor inicial)</li>
+        <li><strong>FV</strong>: valor futuro</li>
+        <li><strong>i</strong>: taxa por período (em decimal)</li>
+        <li><strong>n</strong>: número de períodos</li>
+      </ul>
+
+      <h3>What do the fields mean?</h3>
+      <ul>
+        <li><strong>Valor presente:</strong> o valor que você tem hoje.</li>
+        <li><strong>Taxa por período (%):</strong> taxa do período (mês, ano, etc.).</li>
+        <li><strong>Tempo:</strong> quantos períodos serão considerados.</li>
+      </ul>
+
+      <h3>Dica importante</h3>
+      <p>
+        A taxa e o tempo precisam estar no <strong>mesmo período</strong>.
+        Ex.: se a taxa é ao mês, o tempo deve estar em meses (ou converta).
+      </p>
+
+      <h3>How to read the result</h3>
+      <p>
+        <strong>Valor futuro</strong> é o total ao final do período.
+        Quanto maior a taxa e o tempo, maior tende a ser o FV (efeito da capitalização).
+      </p>
+
+      <p>
+        ⚠️ Esta calculadora não inclui impostos, tarifas ou aportes mensais. Use como estimativa.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    function calcularVF() {
+      const PV = parseFloat(document.getElementById('vf-pv').value) || 0;
+      const taxaPct = parseFloat(document.getElementById('vf-taxa').value) || 0;
+      const n = parseInt(document.getElementById('vf-tempo').value) || 0;
+
+      const i = taxaPct / 100;
+
+      const FV = (i === 0) ? PV : (PV * Math.pow(1 + i, n));
+
+      document.getElementById('vf-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>Valor futuro (FV):</strong> ${formatBRL(FV)}</p>
+        <p><strong>Cálculo:</strong> FV = PV × (1 + i)^n = ${PV.toFixed(2)} × (1 + ${i.toFixed(6)})^${n}</p>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularVF);
+  </script>
+</body>
+</html>

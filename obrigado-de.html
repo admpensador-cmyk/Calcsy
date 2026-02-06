@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obrigado – Calcsy</title>
+  <meta http-equiv="refresh" content="3;url=/">
+<meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/styles_v2.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+  <main class="page">
+    <h1>Obrigado!</h1>
+    <p>Você será redirecionado para a página inicial em instantes.</p>
+  </main>
+</body>
+</html>

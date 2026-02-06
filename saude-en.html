@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health – Calcsy</title>
+  <meta name="description" content="Calculadoras de saúde gratuitas: IMC e ferramentas simples para acompanhar seu corpo e bem-estar.">
+  <link rel="canonical" href="https://www.calcsy.com.br/saude-en.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD: página de coleção -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Calculadoras de Health",
+    "description": "Ferramentas simples de saúde e bem-estar do Calcsy.",
+    "url": "https://www.calcsy.com.br/saude.html"
+  }
+  </script>
+
+  <!-- JSON-LD: breadcrumbs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Health", "item": "https://www.calcsy.com.br/saude.html" }
+    ]
+  }
+  </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index-en.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <nav class="nav">
+      <a href="index-en.html">Home</a>
+      <a href="financas-en.html">Finance</a>
+      <a class="active" href="saude-en.html">Health</a>
+      <a href="trade-en.html">Sports trade</a>
+      <a href="sobre-en.html">About</a>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index-en.html">Home</a>
+    <a href="financas-en.html">Finance</a>
+    <a href="saude-en.html" class="active">Health</a>
+    <a href="trade-en.html">Sports trade</a>
+    <a href="sobre-en.html">About</a>
+    <a href="contato-en.html">Contact</a>
+    <a href="privacidade-en.html">Privacy</a>
+  </nav>
+
+  <main class="page">
+    <a href="index-en.html" class="back-link">← Voltar</a>
+    <h1>Health</h1>
+    <p>
+      Use as calculadoras desta seção para ter uma noção rápida sobre seu corpo. São ferramentas simples,
+      feitas para quem quer apenas “colocar os dados e ver o resultado” sem termos técnicos.
+    </p>
+
+    <div class="cards-grid">
+      <a class="card" href="imc-en.html">
+        <div class="card-icon">🧍</div>
+        <h2>IMC</h2>
+        <p>Descubra seu índice de massa corporal e veja a classificação.</p>
+      </a>
+    </div>
+
+    <section class="calc-info">
+      <h2>O que mais vamos trazer</h2>
+      <p>
+        Estamos organizando mais utilitários de saúde e bem-estar para deixar tudo em um só lugar.
+        A ideia do Calcsy é exatamente essa: facilitar tarefas que você sabe que precisa fazer,
+        mas não quer ficar procurando em vários sites diferentes.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+  <script src="menu.js"></script>
+</body>
+</html>

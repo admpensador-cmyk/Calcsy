@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator of Taxa Nominal e Efetiva – Calcsy</title>
+  <meta name="description" content="Converta taxa nominal em taxa efetiva (e vice-versa) considerando a capitalização no período. Compare investimentos de forma justa.">
+  <link rel="canonical" href="https://www.calcsy.com.br/taxa-nominal-efetiva-en.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculator of Taxa Nominal e Efetiva",
+    "url": "https://www.calcsy.com.br/taxa-nominal-efetiva.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Converta taxa nominal em efetiva considerando a capitalização e compare investimentos no mesmo período."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finance", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Taxa Nominal e Efetiva", "item": "https://www.calcsy.com.br/taxa-nominal-efetiva.html" }
+    ]
+  }
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="index-en.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index-en.html">Home</a>
+    <a href="financas-en.html">Finance</a>
+  </nav>
+
+  <main class="page">
+    <a href="financas-en.html" class="back-link">← Voltar</a>
+    <h1>Calculator of Taxa Nominal e Efetiva</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Tipo de conversão
+        <select id="tne-modo">
+          <option value="nominal-para-efetiva">Nominal → Efetiva</option>
+          <option value="efetiva-para-nominal">Efetiva → Nominal</option>
+        </select>
+      </label>
+
+      <label>Taxa informada (% ao ano)
+        <input type="number" id="tne-taxa" value="12" step="0.01">
+      </label>
+
+      <label>Capitalizações por ano
+        <input type="number" id="tne-m" value="12" step="1">
+      </label>
+
+      <button type="button" onclick="calcularTNE()">Calculate</button>
+    </form>
+
+    <div class="result" id="tne-resultado"></div>
+
+    <section class="calc-info">
+      <h2>How does this calculator work?</h2>
+      <p>
+        Ela converte uma taxa <strong>nominal</strong> em <strong>efetiva</strong> (ou o contrário),
+        levando em conta quantas vezes por ano ocorre a capitalização.
+      </p>
+
+      <h3>Qual a diferença?</h3>
+      <ul>
+        <li><strong>Taxa nominal:</strong> uma taxa “anunciada”, muitas vezes dividida por períodos.</li>
+        <li><strong>Taxa efetiva:</strong> a taxa real do período, já considerando capitalização.</li>
+      </ul>
+
+      <h3>Fórmulas usadas</h3>
+      <p>
+        <strong>Efetiva anual = (1 + nominal/m)<sup>m</sup> − 1</strong>
+      </p>
+      <p>
+        <strong>Nominal anual = m × [(1 + efetiva)<sup>1/m</sup> − 1]</strong>
+      </p>
+
+      <h3>Dica importante</h3>
+      <p>
+        O valor <strong>m</strong> é o número de capitalizações no ano: 12 (mensal), 360 (diária comercial),
+        4 (trimestral), etc. Para comparar investimentos, compare sempre no mesmo período.
+      </p>
+
+      <p>
+        ⚠️ Esta calculadora não inclui impostos e custos. Use para comparar taxas “limpas”.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatPct(v){
+      return (v * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+    }
+
+    function calcularTNE() {
+      const modo = document.getElementById('tne-modo').value;
+      const taxaPct = parseFloat(document.getElementById('tne-taxa').value) || 0;
+      const m = parseInt(document.getElementById('tne-m').value) || 0;
+
+      if (m <= 0) {
+        document.getElementById('tne-resultado').innerHTML = `<p><strong>Erro:</strong> informe um valor válido para capitalizações por ano.</p>`;
+        return;
+      }
+
+      let result;
+      let calcTxt;
+
+      if (modo === "nominal-para-efetiva") {
+        const nominal = taxaPct / 100;
+        result = Math.pow(1 + (nominal / m), m) - 1;
+        calcTxt = `(1 + (${nominal.toFixed(6)}/${m}))^${m} − 1`;
+        document.getElementById('tne-resultado').innerHTML = `
+          <h2>Resultado</h2>
+          <p><strong>Taxa efetiva anual:</strong> ${formatPct(result)}</p>
+          <p><strong>Cálculo:</strong> ${calcTxt}</p>
+        `;
+      } else {
+        const efetiva = taxaPct / 100;
+        result = m * (Math.pow(1 + efetiva, 1/m) - 1);
+        calcTxt = `${m} × ((1 + ${efetiva.toFixed(6)})^(1/${m}) − 1)`;
+        document.getElementById('tne-resultado').innerHTML = `
+          <h2>Resultado</h2>
+          <p><strong>Taxa nominal anual equivalente:</strong> ${formatPct(result)}</p>
+          <p><strong>Cálculo:</strong> ${calcTxt}</p>
+        `;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularTNE);
+  </script>
+</body>
+</html>

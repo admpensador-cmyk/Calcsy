@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="/styles_v2.css">
+  <title>Taxas Equivalentes – Calcsy</title>
+  <meta name="description" content="Converta uma taxa efetiva de um período para taxas equivalentes em outros períodos (juros compostos)." />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+  <!-- Cabeçalho simples no mesmo espírito das outras páginas -->
+  <div style="max-width:900px;margin:18px auto 0;padding:0 14px;">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <a href="/" style="text-decoration:none;font-weight:800;color:#111;">C Calcsy</a>
+      <span style="opacity:.5;">☰</span>
+      <a href="/" style="text-decoration:none;">Start</a>
+      <a href="/financas.html" style="text-decoration:none;">Finanzen</a>
+      <a href="/financas.html" style="text-decoration:none;opacity:.85;">← Voltar</a>
+    </div>
+  </div>
+
+  <main style="max-width:900px;margin:10px auto 40px;padding:0 14px;">
+    <h1 style="margin:14px 0 6px;">Taxas Equivalentes</h1>
+    <p style="margin:0 0 16px;opacity:.8">
+      Converta uma taxa <b>efetiva</b> de um período para outro (juros compostos).
+    </p>
+
+    <section style="border:1px solid #e8e8e8;border-radius:12px;padding:14px;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
+        <label style="display:block;min-width:180px;">
+          <div style="font-size:13px;margin-bottom:6px;">Taxa do período (%)</div>
+          <input id="rate" inputmode="decimal" placeholder="Ex: 2,5"
+                 style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;" />
+        </label>
+
+        <label style="display:block;min-width:220px;">
+          <div style="font-size:13px;margin-bottom:6px;">Período de origem</div>
+          <select id="origin" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;">
+            <option value="daily">Diário</option>
+            <option value="monthly" selected>Mensal</option>
+            <option value="bimonthly">Bimestral</option>
+            <option value="quarterly">Trimestral</option>
+            <option value="semiannual">Semestral</option>
+            <option value="annual">Anual</option>
+          </select>
+        </label>
+
+        <button id="calc"
+                style="padding:10px 14px;border:1px solid #111;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+          Berechnen
+        </button>
+      </div>
+
+      <p id="err" style="display:none;margin:12px 0 0;color:#b00020;"></p>
+
+      <div id="out" style="display:none;margin-top:14px;">
+        <h2 style="font-size:16px;margin:10px 0;">Resultado</h2>
+
+        <div style="overflow:auto;">
+          <table style="width:100%;border-collapse:collapse;min-width:540px;">
+            <thead>
+              <tr>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:10px;">Período</th>
+                <th style="text-align:right;border-bottom:1px solid #eee;padding:10px;">Taxa equivalente</th>
+                <th style="text-align:right;border-bottom:1px solid #eee;padding:10px;">Frequência/ano</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <p style="margin:12px 0 0;opacity:.75;font-size:13px;">
+          Base padrão: <b>365 dias/ano</b>. Conversão por equivalência em juros compostos.
+        </p>
+      </div>
+    </section>
+
+    <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
+  </main>
+
+<script>
+  const periods = {
+    daily:      { label: "Diário",     freqPerYear: 365 },
+    monthly:    { label: "Mensal",     freqPerYear: 12  },
+    bimonthly:  { label: "Bimestral",  freqPerYear: 6   },
+    quarterly:  { label: "Trimestral", freqPerYear: 4   },
+    semiannual: { label: "Semestral",  freqPerYear: 2   },
+    annual:     { label: "Anual",      freqPerYear: 1   }
+  };
+
+  const $ = (id) => document.getElementById(id);
+
+  function parsePct(v) {
+    if (!v) return NaN;
+    const cleaned = String(v).trim().replace(/\s/g, "").replace(",", ".");
+    return Number(cleaned);
+  }
+
+  function fmtPct(decimalRate) {
+    const pct = decimalRate * 100;
+    // 6 casas é “preciso o suficiente” sem virar novela
+    return pct.toFixed(6).replace(".", ",") + "%";
+  }
+
+  function showError(msg) {
+    $("err").textContent = msg;
+    $("err").style.display = "block";
+    $("out").style.display = "none";
+  }
+
+  function clearError() {
+    $("err").textContent = "";
+    $("err").style.display = "none";
+  }
+
+  function compute() {
+    clearError();
+
+    const ratePct = parsePct($("rate").value);
+    const originKey = $("origin").value;
+
+    if (!Number.isFinite(ratePct)) return showError("Informe uma taxa válida (ex: 2,5).");
+    const iOrigin = ratePct / 100;
+    if (iOrigin <= -1) return showError("A taxa não pode ser menor ou igual a -100%.");
+
+    const origin = periods[originKey];
+    if (!origin) return showError("Período de origem inválido.");
+
+    const tbody = $("tbody");
+    tbody.innerHTML = "";
+
+    // Conversão direta:
+    // i_target = (1 + i_origin)^(freq_origin / freq_target) - 1
+    const base = 1 + iOrigin;
+    if (base <= 0) return showError("Taxa inválida para conversão (base <= 0).");
+
+    Object.entries(periods).forEach(([key, p]) => {
+      const power = origin.freqPerYear / p.freqPerYear;
+      const iTarget = Math.pow(base, power) - 1;
+
+      const tr = document.createElement("tr");
+
+      const td1 = document.createElement("td");
+      td1.textContent = p.label;
+      td1.style.padding = "10px";
+      td1.style.borderBottom = "1px solid #f2f2f2";
+
+      const td2 = document.createElement("td");
+      td2.textContent = fmtPct(iTarget);
+      td2.style.padding = "10px";
+      td2.style.textAlign = "right";
+      td2.style.borderBottom = "1px solid #f2f2f2";
+
+      const td3 = document.createElement("td");
+      td3.textContent = String(p.freqPerYear);
+      td3.style.padding = "10px";
+      td3.style.textAlign = "right";
+      td3.style.borderBottom = "1px solid #f2f2f2";
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tbody.appendChild(tr);
+    });
+
+    $("out").style.display = "block";
+  }
+
+  $("calc").addEventListener("click", compute);
+  $("rate").addEventListener("keydown", (e) => { if (e.key === "Enter") compute(); });
+</script>
+</body>
+</html>

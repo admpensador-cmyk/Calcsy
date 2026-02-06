@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rechner für CAGR (Taxa Anual Composta) – Calcsy</title>
+  <meta name="description" content="Calcule a taxa anual composta (CAGR) entre um valor inicial e final em um período. Útil para comparar retornos ao longo do tempo.">
+  <link rel="canonical" href="https://www.calcsy.com.br/cagr-de.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Rechner für CAGR (Taxa Anual Composta)",
+    "url": "https://www.calcsy.com.br/cagr.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule a taxa anual composta (CAGR) a partir de valor inicial, valor final e período."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finanzen", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "CAGR", "item": "https://www.calcsy.com.br/cagr.html" }
+    ]
+  }
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+  <!-- Chart.js für Diagramm -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="index-de.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index-de.html">Start</a>
+    <a href="financas-de.html">Finanzen</a>
+  </nav>
+
+  <main class="page">
+    <a href="financas-de.html" class="back-link">← Voltar</a>
+    <h1>Rechner für CAGR (Taxa Anual Composta)</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Anfangsbetrag (R$)
+        <input type="number" id="cagr-inicial" value="10000" step="0.01" min="0">
+      </label>
+
+      <label>Endbetrag (R$)
+        <input type="number" id="cagr-final" value="16000" step="0.01" min="0">
+      </label>
+
+      <label>Zeitraum (Jahre)
+        <input type="number" id="cagr-anos" value="3" step="0.01" min="0">
+      </label>
+
+      <button type="button" onclick="calcularCAGR()">Berechnen</button>
+    </form>
+
+    <div class="result" id="cagr-resultado"></div>
+    <!-- Wachstumsgrafik -->
+    <canvas id="cagrChart" style="max-width: 100%; margin-top: 20px;"></canvas>
+
+    <section class="calc-info">
+      <h2>Wie funktioniert dieser Rechner?</h2>
+      <p>
+        O <strong>CAGR</strong> (Compound Annual Growth Rate) é a taxa anual “média composta” que
+        transforma um valor inicial em um valor final ao longo de um período.
+      </p>
+
+      <h3>Fórmula</h3>
+      <p>
+        <strong>CAGR = (VF / VI)<sup>1/n</sup> − 1</strong>
+      </p>
+
+      <h3>Wie liest man das Ergebnis</h3>
+      <p>
+        O CAGR é ótimo para comparar investimentos em prazos diferentes, pois padroniza o retorno em taxa anual.
+        Ele não mostra volatilidade nem “caminho” (apenas início e fim).
+      </p>
+
+      <p>⚠️ Se houver aportes no meio do caminho, o CAGR simples pode não representar bem. Nesse caso, use TIR/IRR.</p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatPct(p){
+      return (p * 100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+    }
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    function calcularCAGR() {
+      const VI = parseFloat(document.getElementById('cagr-inicial').value) || 0;
+      const VF = parseFloat(document.getElementById('cagr-final').value) || 0;
+      const anos = parseFloat(document.getElementById('cagr-anos').value) || 0;
+
+      if (VI <= 0 || VF <= 0 || anos <= 0) {
+        document.getElementById('cagr-resultado').innerHTML = `<p><strong>Erro:</strong> informe valores positivos para VI, VF e anos.</p>`;
+        return;
+      }
+
+      const cagr = Math.pow(VF / VI, 1 / anos) - 1;
+
+      document.getElementById('cagr-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>CAGR (taxa anual composta):</strong> ${formatPct(cagr)}</p>
+        <p><strong>De:</strong> ${formatBRL(VI)} <strong>para</strong> ${formatBRL(VF)} <strong>em</strong> ${anos} anos</p>
+        <p><strong>Cálculo:</strong> (${(VF/VI).toFixed(6)})^(1/${anos}) − 1</p>
+      `;
+
+      // Daten für Wachstumskurve erstellen
+      const labels = [];
+      const dataVals = [];
+      for (let i = 0; i <= Math.ceil(anos); i++) {
+        labels.push(i.toString());
+        const val = VI * Math.pow(1 + cagr, i);
+        dataVals.push(Number(val.toFixed(2)));
+      }
+      const ctx = document.getElementById('cagrChart').getContext('2d');
+      if (window.cagrChart) {
+        window.cagrChart.destroy();
+      }
+      window.cagrChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Betrag',
+            data: dataVals,
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true }
+          },
+          scales: {
+            x: { title: { display: true, text: 'Jahr' } },
+            y: { title: { display: true, text: 'Betrag' } }
+          }
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularCAGR);
+  </script>
+</body>
+</html>

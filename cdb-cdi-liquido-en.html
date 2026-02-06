@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator of CDB (CDI) Líquido – Calcsy</title>
+  <meta name="description" content="Calcule o rendimento líquido de um CDB (% do CDI) considerando prazo, IR regressivo e IOF (até 29 dias). Veja bruto, impostos e montante líquido.">
+  <link rel="canonical" href="https://www.calcsy.com.br/cdb-cdi-liquido-en.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculator of CDB (CDI) Líquido",
+    "url": "https://www.calcsy.com.br/cdb-cdi-liquido.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule o rendimento líquido de um CDB atrelado ao CDI, considerando IR e IOF quando aplicável."
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finance", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "CDB (CDI) Líquido", "item": "https://www.calcsy.com.br/cdb-cdi-liquido.html" }
+    ]
+  }
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="index-en.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+<div class="lang-switch">
+  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
+  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
+  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+</div>
+<script>
+function switchLang(lang) {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf('/') + 1);
+  const base = file.replace(/(-en|-de)?\.html$/,'');
+  let newFile = base;
+  if(lang === 'pt') newFile += '.html';
+  if(lang === 'en') newFile += '-en.html';
+  if(lang === 'de') newFile += '-de.html';
+  const newPath = path.replace(/[^/]+$/, '') + newFile;
+  window.location.pathname = newPath;
+}
+</script>
+<style>
+.lang-switch {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 999;
+}
+.lang-switch a { margin-left: 4px; }
+.lang-switch img {
+  width: 24px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+</style>
+
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index-en.html">Home</a>
+    <a href="financas-en.html">Finance</a>
+  </nav>
+
+  <main class="page">
+    <a href="financas-en.html" class="back-link">← Voltar</a>
+    <h1>Calculator of CDB (CDI) Líquido</h1>
+
+    <form class="form" onsubmit="return false;">
+      <label>Valor investido (R$)
+        <input type="number" id="cdb-principal" value="10000" step="0.01" min="0">
+      </label>
+
+      <label>% do CDI
+        <input type="number" id="cdb-pctcdi" value="110" step="0.01" min="0">
+      </label>
+
+      <label>CDI ao ano (% a.a.)
+        <input type="number" id="cdb-cdi" value="10.5" step="0.01" min="0">
+      </label>
+
+      <label>Prazo (dias corridos)
+        <input type="number" id="cdb-dias" value="365" step="1" min="0">
+      </label>
+
+      <button type="button" onclick="calcularCDB()">Calculate</button>
+    </form>
+
+    <div class="result" id="cdb-resultado"></div>
+
+    <section class="calc-info">
+      <h2>How does this calculator work?</h2>
+      <p>
+        Ela estima o rendimento de um <strong>CDB atrelado ao CDI</strong>, considerando o prazo em dias e a tributação
+        padrão de renda fixa: <strong>IOF</strong> (se resgatar antes de 30 dias) e <strong>IR</strong> regressivo (sobre o rendimento).
+      </p>
+
+      <h3>What do the fields mean?</h3>
+      <ul>
+        <li><strong>% do CDI:</strong> o quanto o CDB rende em relação ao CDI (ex.: 110% do CDI).</li>
+        <li><strong>CDI ao ano:</strong> CDI anual de referência (muda ao longo do tempo; aqui você informa uma estimativa).</li>
+        <li><strong>Prazo (dias):</strong> tempo entre aplicação e resgate.</li>
+      </ul>
+
+      <h3>How to read the result</h3>
+      <p>
+        Você verá o <strong>rendimento bruto</strong>, o impacto de <strong>IOF</strong> (se houver),
+        o <strong>IR</strong> e o <strong>montante líquido</strong> no resgate.
+      </p>
+
+      <p>
+        ⚠️ É uma estimativa. CDB pode ter carência, liquidez diária, e o CDI real pode variar no período.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 · Calcsy</footer>
+
+  <script src="menu.js"></script>
+
+  <script>
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    function formatPct(p){
+      return p.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+    }
+
+    function aliquotaIR(dias){
+      if (dias <= 180) return 22.5;
+      if (dias <= 360) return 20.0;
+      if (dias <= 720) return 17.5;
+      return 15.0;
+    }
+
+    function aliquotaIOFPercentualDoRendimento(dias){
+      const tabela = {
+        1: 96,  2: 93,  3: 90,  4: 86,  5: 83,
+        6: 80,  7: 76,  8: 73,  9: 70, 10: 66,
+       11: 63, 12: 60, 13: 56, 14: 53, 15: 50,
+       16: 46, 17: 43, 18: 40, 19: 36, 20: 33,
+       21: 30, 22: 26, 23: 23, 24: 20, 25: 16,
+       26: 13, 27: 10, 28:  6, 29:  3, 30:  0
+      };
+      if (dias <= 0) return 0;
+      if (dias >= 30) return 0;
+      return tabela[dias] || 0;
+    }
+
+    function calcularCDB() {
+      const principal = parseFloat(document.getElementById('cdb-principal').value) || 0;
+      const pctCDI = parseFloat(document.getElementById('cdb-pctcdi').value) || 0;
+      const cdiAA = parseFloat(document.getElementById('cdb-cdi').value) || 0;
+      const dias = parseInt(document.getElementById('cdb-dias').value) || 0;
+
+      const taxaAA = (pctCDI / 100) * (cdiAA / 100); // taxa anual estimada (decimal)
+      const fator = Math.pow(1 + taxaAA, dias / 365);
+      const montanteBruto = principal * fator;
+      const rendimentoBruto = montanteBruto - principal;
+
+      if (rendimentoBruto <= 0) {
+        document.getElementById('cdb-resultado').innerHTML = `
+          <h2>Resultado</h2>
+          <p><strong>Montante bruto:</strong> ${formatBRL(montanteBruto)}</p>
+          <p><strong>Rendimento bruto:</strong> ${formatBRL(rendimentoBruto)}</p>
+          <p><strong>IOF:</strong> ${formatBRL(0)}</p>
+          <p><strong>IR:</strong> ${formatBRL(0)}</p>
+          <p><strong>Montante líquido:</strong> ${formatBRL(montanteBruto)}</p>
+        `;
+        return;
+      }
+
+      const iofPct = aliquotaIOFPercentualDoRendimento(dias);
+      const iof = rendimentoBruto * (iofPct / 100);
+
+      const baseIR = Math.max(0, rendimentoBruto - iof);
+      const irPct = aliquotaIR(dias);
+      const ir = baseIR * (irPct / 100);
+
+      const rendimentoLiquido = rendimentoBruto - iof - ir;
+      const montanteLiquido = principal + rendimentoLiquido;
+
+      document.getElementById('cdb-resultado').innerHTML = `
+        <h2>Resultado</h2>
+        <p><strong>Taxa anual estimada:</strong> ${formatPct(taxaAA*100)}</p>
+        <p><strong>Montante bruto:</strong> ${formatBRL(montanteBruto)}</p>
+        <p><strong>Rendimento bruto:</strong> ${formatBRL(rendimentoBruto)}</p>
+        <p><strong>IOF:</strong> ${formatBRL(iof)} <small>(alíquota: ${formatPct(iofPct)})</small></p>
+        <p><strong>IR:</strong> ${formatBRL(ir)} <small>(alíquota: ${formatPct(irPct)})</small></p>
+        <p><strong>Montante líquido:</strong> ${formatBRL(montanteLiquido)}</p>
+        <p><strong>Cálculo:</strong> taxa anual = (%CDI × CDI). VF ≈ VP × (1 + taxa)^(dias/365)</p>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', calcularCDB);
+  </script>
+</body>
+</html>
