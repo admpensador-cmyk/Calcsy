@@ -51,38 +51,12 @@
     <a href="index-en.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
     <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
   </header>
-<div class="lang-switch">
-  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
-  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
-  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+<div class="lang-switch" aria-label="Language selector">
+  <a class="lang-btn" href="regra72.html" title="Português" aria-label="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"></a>
+  <a class="lang-btn" href="regra72-en.html" title="English" aria-label="English"><img src="https://flagcdn.com/w40/us.png" alt="EN"></a>
+  <a class="lang-btn" href="regra72-de.html" title="Deutsch" aria-label="Deutsch"><img src="https://flagcdn.com/w40/de.png" alt="DE"></a>
 </div>
-<script>
-function switchLang(lang) {
-  const path = window.location.pathname;
-  const file = path.substring(path.lastIndexOf('/') + 1);
-  const base = file.replace(/(-en|-de)?\.html$/,'');
-  let newFile = base;
-  if(lang === 'pt') newFile += '.html';
-  if(lang === 'en') newFile += '-en.html';
-  if(lang === 'de') newFile += '-de.html';
-  const newPath = path.replace(/[^/]+$/, '') + newFile;
-  window.location.pathname = newPath;
-}
-</script>
-<style>
-.lang-switch {
-  position: fixed;
-  top: 8px;
-  right: 8px;
-  z-index: 999;
-}
-.lang-switch a { margin-left: 4px; }
-.lang-switch img {
-  width: 24px;
-  height: 16px;
-  border: 1px solid #ccc;
-}
-</style>
+
 
   <nav id="mobileNav" class="mobile-nav">
     <a href="index-en.html">Home</a>
@@ -90,7 +64,7 @@ function switchLang(lang) {
   </nav>
 
   <main class="page">
-    <a href="financas-en.html" class="back-link">← Voltar</a>
+    <a href="financas-en.html" class="back-link">← Back</a>
     <h1>Calculadora da Rule of 72</h1>
 
     <form class="form" onsubmit="return false;">
@@ -150,7 +124,7 @@ function switchLang(lang) {
       const regra = parseFloat(document.getElementById('r72-regra').value) || 72;
 
       if (taxaPct <= 0) {
-        document.getElementById('r72-resultado').innerHTML = `<p><strong>Erro:</strong> informe uma taxa maior que 0.</p>`;
+        document.getElementById('r72-resultado').innerHTML = `<p><strong>Error:</strong> informe uma taxa maior que 0.</p>`;
         return;
       }
 
@@ -158,7 +132,7 @@ function switchLang(lang) {
       const meses = anos * 12;
 
       document.getElementById('r72-resultado').innerHTML = `
-        <h2>Resultado</h2>
+        <h2>Result</h2>
         <p><strong>Tempo aproximado para dobrar:</strong> ${formatAnos(anos)} anos</p>
         <p><strong>Em meses:</strong> ${formatAnos(meses)} meses</p>
         <p><strong>Cálculo:</strong> tempo ≈ ${regra} / ${taxaPct.toFixed(2)} = ${formatAnos(anos)}</p>

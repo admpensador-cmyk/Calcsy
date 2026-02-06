@@ -10,38 +10,12 @@
 </head>
 
 <body>
-<div class="lang-switch">
-  <a href="#" onclick="switchLang('pt')"><img src="https://flagcdn.com/w20/br.png" alt="Português"></a>
-  <a href="#" onclick="switchLang('en')"><img src="https://flagcdn.com/w20/us.png" alt="English"></a>
-  <a href="#" onclick="switchLang('de')"><img src="https://flagcdn.com/w20/de.png" alt="Deutsch"></a>
+<div class="lang-switch" aria-label="Language selector">
+  <a class="lang-btn" href="taxas-equivalentes.html" title="Português" aria-label="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"></a>
+  <a class="lang-btn" href="taxas-equivalentes-en.html" title="English" aria-label="English"><img src="https://flagcdn.com/w40/us.png" alt="EN"></a>
+  <a class="lang-btn" href="taxas-equivalentes-de.html" title="Deutsch" aria-label="Deutsch"><img src="https://flagcdn.com/w40/de.png" alt="DE"></a>
 </div>
-<script>
-function switchLang(lang) {
-  const path = window.location.pathname;
-  const file = path.substring(path.lastIndexOf('/') + 1);
-  const base = file.replace(/(-en|-de)?\.html$/,'');
-  let newFile = base;
-  if(lang === 'pt') newFile += '.html';
-  if(lang === 'en') newFile += '-en.html';
-  if(lang === 'de') newFile += '-de.html';
-  const newPath = path.replace(/[^/]+$/, '') + newFile;
-  window.location.pathname = newPath;
-}
-</script>
-<style>
-.lang-switch {
-  position: fixed;
-  top: 8px;
-  right: 8px;
-  z-index: 999;
-}
-.lang-switch a { margin-left: 4px; }
-.lang-switch img {
-  width: 24px;
-  height: 16px;
-  border: 1px solid #ccc;
-}
-</style>
+
   <!-- Cabeçalho simples no mesmo espírito das outras páginas -->
   <div style="max-width:900px;margin:18px auto 0;padding:0 14px;">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -49,7 +23,7 @@ function switchLang(lang) {
       <span style="opacity:.5;">☰</span>
       <a href="/" style="text-decoration:none;">Home</a>
       <a href="/financas.html" style="text-decoration:none;">Finance</a>
-      <a href="/financas.html" style="text-decoration:none;opacity:.85;">← Voltar</a>
+      <a href="/financas.html" style="text-decoration:none;opacity:.85;">← Back</a>
     </div>
   </div>
 
