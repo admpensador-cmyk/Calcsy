@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compound Interest Calculator – Calcsy</title>
+  <meta name="description" content="Project the future value of an investment with compound interest and monthly contributions. See how much your money can grow over time.">
+  <link rel="canonical" href="https://www.calcsy.com.br/juros-compostos-en.html">
+  <link rel="stylesheet" href="/styles_v2.css">
+  <link rel="icon" href="favicon.ico">
+  <!-- Google Analytics (same ID reused) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HNM92S744Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HNM92S744Q');
+  </script>
+  <!-- JSON-LD for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Compound Interest Calculator",
+    "url": "https://www.calcsy.com.br/juros-compostos-en.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Simulate compound interest with monthly contributions, rate and time."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calcsy.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Finance", "item": "https://www.calcsy.com.br/financas.html" },
+      { "@type": "ListItem", "position": 3, "name": "Compound Interest", "item": "https://www.calcsy.com.br/juros-compostos-en.html" }
+    ]
+  }
+  </script>
+  <!-- AdSense (client id unchanged) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+  <!-- Chart.js library for graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html" class="brand"><span class="brand-icon">C</span> Calcsy</a>
+    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  </header>
+  <nav id="mobileNav" class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="financas.html">Finance</a>
+  </nav>
+  <main class="page">
+    <a href="financas.html" class="back-link">← Back</a>
+    <h1>Compound Interest Calculator</h1>
+    <!-- Link to detailed article -->
+    <p>
+      <a href="guia-juros-compostos-en.html">Complete guide to compound interest →</a>
+    </p>
+    <form class="form" onsubmit="return false;">
+      <label>Initial amount ($)
+        <input type="number" id="jc-en-inicial" value="1000" step="0.01">
+      </label>
+      <label>Monthly contribution ($)
+        <input type="number" id="jc-en-aporte" value="200" step="0.01">
+      </label>
+      <label>Monthly rate (%)
+        <input type="number" id="jc-en-taxa" value="1" step="0.01">
+      </label>
+      <label>Months
+        <input type="number" id="jc-en-meses" value="12" step="1">
+      </label>
+      <button type="button" onclick="calcularJCEn()">Calculate</button>
+    </form>
+    <div class="result" id="jc-en-resultado"></div>
+    <!-- Balance evolution graph -->
+    <canvas id="jc-en-chart" style="max-width:100%;height:300px;margin-top:20px;"></canvas>
+    <section class="calc-info">
+      <h2>How does this calculator work?</h2>
+      <p>
+        It projects the future value of an investment using compound interest. You specify how
+        much you will invest initially, whether you will make monthly contributions, what the
+        monthly rate is and for how many months the money will remain invested.
+      </p>
+      <p>
+        The formula used is the compound capitalization formula, adding the growth of the
+        initial amount and contributions month by month.
+      </p>
+      <p>
+        When you click calculate the tool not only shows the final values but also generates a
+        chart of the month‑by‑month evolution. That way you clearly see how the investment
+        grows over time and how the accumulated interest accelerates after a few periods.
+      </p>
+      <h3>What do the fields mean?</h3>
+      <ul>
+        <li><strong>Initial amount:</strong> how much you already have available to invest.</li>
+        <li><strong>Monthly contribution:</strong> how much you intend to add every month (can be 0).</li>
+        <li><strong>Monthly rate (%):</strong> the estimated monthly return.</li>
+        <li><strong>Months:</strong> the duration of the investment.</li>
+      </ul>
+      <h3>How to read the result</h3>
+      <p>
+        <strong>Future value</strong> is the total at the end of the period. <strong>Total
+        contributed</strong> shows how much of the total came from your pocket. <strong>Interest
+        earned</strong> is how much the money “worked” for you.
+      </p>
+      <p>
+        For a deeper understanding of compounding, effective rates and factors that influence
+        returns, see our <a href="guia-juros-compostos-en.html">complete guide to compound interest</a> with practical examples, tips and common mistakes.
+      </p>
+    </section>
+  </main>
+  <footer class="footer">© 2025 · Calcsy</footer>
+  <script src="menu.js"></script>
+  <script>
+    function formatUSD(v){
+      return v.toLocaleString('en-US',{style:'currency',currency:'USD'});
+    }
+    // Global chart variable
+    let jcEnChart;
+    function calcularJCEn() {
+      const P = parseFloat(document.getElementById('jc-en-inicial').value) || 0;
+      const A = parseFloat(document.getElementById('jc-en-aporte').value) || 0;
+      const i = (parseFloat(document.getElementById('jc-en-taxa').value) || 0) / 100;
+      const n = parseInt(document.getElementById('jc-en-meses').value) || 0;
+      let saldo = P;
+      const labels = [];
+      const valores = [];
+      for (let mes = 1; mes <= n; mes++) {
+        saldo = saldo * (1 + i);
+        saldo += A;
+        labels.push(mes.toString());
+        valores.push(parseFloat(saldo.toFixed(2)));
+      }
+      const montante = saldo;
+      const totalContribuido = P + (A * n);
+      const juros = montante - totalContribuido;
+      document.getElementById('jc-en-resultado').innerHTML = `
+        <h2>Result</h2>
+        <p><strong>Future value:</strong> ${formatUSD(montante)}</p>
+        <p><strong>Total contributed:</strong> ${formatUSD(totalContribuido)}</p>
+        <p><strong>Interest earned:</strong> ${formatUSD(juros)}</p>
+      `;
+      const ctx = document.getElementById('jc-en-chart').getContext('2d');
+      if (jcEnChart) {
+        jcEnChart.destroy();
+      }
+      jcEnChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Balance',
+              data: valores,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Month' }
+            },
+            y: {
+              title: { display: true, text: 'Value ($)' }
+            }
+          }
+        }
+      });
+    }
+    window.addEventListener('DOMContentLoaded', calcularJCEn);
+  </script>
+</body>
+</html>

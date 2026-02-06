@@ -43,6 +43,8 @@
   }
   </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+  <!-- Biblioteca Chart.js para exibir o gráfico -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -59,6 +61,11 @@
   <main class="page">
     <a href="financas.html" class="back-link">← Voltar</a>
     <h1>Calculadora de Juros Compostos</h1>
+
+    <!-- Link para artigo detalhado -->
+    <p>
+      <a href="guia-juros-compostos.html">Guia completo de juros compostos →</a>
+    </p>
 
     <form class="form" onsubmit="return false;">
       <label>Valor inicial (R$)
@@ -78,6 +85,9 @@
 
     <div class="result" id="jc-resultado"></div>
 
+    <!-- Gráfico de evolução do montante -->
+    <canvas id="jc-chart" style="max-width:100%;height:300px;margin-top:20px;"></canvas>
+
     <!-- NOVA SEÇÃO DE DESCRIÇÃO -->
     <section class="calc-info">
       <h2>Como funciona esta calculadora?</h2>
@@ -89,6 +99,13 @@
       <p>
         A fórmula usada é a de capitalização composta, somando o crescimento do valor inicial
         e dos aportes mês a mês.
+      </p>
+
+      <p>
+        Ao clicar em calcular, a ferramenta não apenas exibe os valores finais como também
+        gera um gráfico da evolução mês a mês. Assim você visualiza de maneira clara o
+        crescimento do investimento ao longo do tempo e percebe como os juros acumulados
+        aceleram depois de alguns períodos.
       </p>
 
       <h3>O que significam os campos?</h3>
@@ -105,6 +122,13 @@
         <strong>Total aportado</strong> mostra quanto do total veio do seu bolso.
         <strong>Juros acumulados</strong> é o quanto o dinheiro “trabalhou” pra você.
       </p>
+
+      <p>
+        Para compreender melhor os conceitos de capitalização, taxa efetiva e fatores
+        que influenciam a rentabilidade, recomendamos a leitura do nosso artigo
+        <a href="guia-juros-compostos.html">Guia completo de juros compostos</a>, com
+        exemplos práticos, dicas e erros comuns.
+      </p>
     </section>
   </main>
 
@@ -117,17 +141,30 @@
       return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     }
 
+    // Variável global para armazenar o gráfico. Permitirá destruí‑lo antes de criar um novo.
+    let jcChart;
+
     function calcularJC() {
       const P = parseFloat(document.getElementById('jc-inicial').value) || 0;
       const A = parseFloat(document.getElementById('jc-aporte').value) || 0;
       const i = (parseFloat(document.getElementById('jc-taxa').value) || 0) / 100;
       const n = parseInt(document.getElementById('jc-meses').value) || 0;
 
-      let montante = P * Math.pow(1+i, n);
-      for (let k = 1; k <= n; k++) {
-        montante += A * Math.pow(1+i, n - k);
+      // Calcula o montante final e também a evolução do saldo mês a mês
+      let montante = 0;
+      let saldo = P;
+      const labels = [];
+      const valores = [];
+      // Calcula saldo em cada mês, considerando aporte no início do período
+      for (let mes = 1; mes <= n; mes++) {
+        // Crescimento do saldo no mês
+        saldo = saldo * (1 + i);
+        // Aplica aporte mensal após a capitalização
+        saldo += A;
+        labels.push(mes.toString());
+        valores.push(parseFloat(saldo.toFixed(2)));
       }
-
+      montante = saldo;
       const totalAportado = P + (A * n);
       const juros = montante - totalAportado;
 
@@ -137,6 +174,40 @@
         <p><strong>Total aportado:</strong> ${formatBRL(totalAportado)}</p>
         <p><strong>Juros acumulados:</strong> ${formatBRL(juros)}</p>
       `;
+
+      // Atualiza o gráfico com a evolução do montante
+      const ctx = document.getElementById('jc-chart').getContext('2d');
+      // Remove gráfico anterior se existir
+      if (jcChart) {
+        jcChart.destroy();
+      }
+      jcChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Montante acumulado',
+              data: valores,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Mês' }
+            },
+            y: {
+              title: { display: true, text: 'Valor (R$)' }
+            }
+          }
+        }
+      });
     }
 
     window.addEventListener('DOMContentLoaded', calcularJC);
