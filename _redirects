@@ -1,23 +1,12 @@
-# 0) BLINDAGEM: nunca redirecionar assets (css/js/fontes/imagens)
-/:splat.css   /:splat.css   200!
-/:splat.js    /:splat.js    200!
-/:splat.mjs   /:splat.mjs   200!
-/:splat.map   /:splat.map   200!
-/:splat.svg   /:splat.svg   200!
-/:splat.png   /:splat.png   200!
-/:splat.jpg   /:splat.jpg   200!
-/:splat.jpeg  /:splat.jpeg  200!
-/:splat.webp  /:splat.webp  200!
-/:splat.gif   /:splat.gif   200!
-/:splat.woff2 /:splat.woff2 200!
-/:splat.woff  /:splat.woff  200!
-/:splat.ttf   /:splat.ttf   200!
+# 1) PASS-THROUGH: tudo que tiver extensão (.) é arquivo, não rota de página.
+# Isso evita /styles.css virar /styles.css.html
+/*.*  /:splat  200!
 
-# 1) URLs "limpas" -> servir o .html (rewrite 200)
+# 2) URLs limpas -> servir o .html (rewrite 200)
 /obrigado     /obrigado.html  200
 /obrigado/    /obrigado.html  200
 /:splat       /:splat.html    200
 /:splat/      /:splat.html    200
 
-# 2) Home
+# 3) Home
 /index.html   /               301!
