@@ -1,5 +1,4 @@
 # 0) BLINDAGEM: nunca redirecionar assets (css/js/fontes/imagens)
-# (isso impede /styles.css de cair em qualquer regra e voltar 301)
 /:splat.css   /:splat.css   200!
 /:splat.js    /:splat.js    200!
 /:splat.mjs   /:splat.mjs   200!
@@ -14,10 +13,11 @@
 /:splat.woff  /:splat.woff  200!
 /:splat.ttf   /:splat.ttf   200!
 
-# 1) Pretty URL do obrigado
+# 1) URLs "limpas" -> servir o .html (rewrite 200)
 /obrigado     /obrigado.html  200
 /obrigado/    /obrigado.html  200
+/:splat       /:splat.html    200
+/:splat/      /:splat.html    200
 
-# 2) Canonical: remover .html
-/index.html   /        301!
-/:splat.html  /:splat  301!
+# 2) Home
+/index.html   /               301!

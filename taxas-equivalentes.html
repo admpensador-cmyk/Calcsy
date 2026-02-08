@@ -84,7 +84,30 @@
     </section>
 
     <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
-  </main>
+  
+
+<section class="card" style="margin-top:18px;">
+      <h2>Guia rápido: taxas equivalentes</h2>
+      <p>
+        Taxas equivalentes são taxas <b>diferentes</b> (mensal, anual, diária…) que geram o <b>mesmo fator de capitalização</b>
+        quando você usa juros compostos. Isso evita comparar “maçã com laranja” (ex.: 2% ao mês vs 24% ao ano).
+      </p>
+      <h3>Como a conversão funciona</h3>
+      <p style="opacity:.9;">
+        A ideia é manter o fator: <b>(1+i)<sup>t</sup></b>. Se você tem uma taxa efetiva em um período, calculamos o fator desse período
+        e reescrevemos para o novo período.
+      </p>
+      <h3>Exemplo prático</h3>
+      <ul>
+        <li>Taxa: <b>2,00% a.m.</b></li>
+        <li>Equivalente anual (composto): <b>(1,02)<sup>12</sup> − 1</b></li>
+      </ul>
+      <h3>Perguntas comuns</h3>
+      <details><summary>Posso usar 252 dias úteis?</summary><p>Para ativos indexados a dias úteis, faz sentido. Para comparação geral, 365 dias/ano é o padrão mais claro.</p></details>
+      <details><summary>Taxa nominal e efetiva são a mesma coisa?</summary><p>Não. A efetiva já inclui o efeito de capitalização no período. A nominal costuma ser uma “taxa anunciada” que precisa de conversão.</p></details>
+    </section>
+
+</main>
 
 <script>
   const periods = {
