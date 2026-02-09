@@ -364,18 +364,3 @@ body {
 .lang-btn:hover{transform:scale(1.04);background:rgba(255,255,255,0.18);}
 .lang-btn img{width:34px;height:24px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);}
 @media (max-width:480px){.lang-switch{top:auto;bottom:12px;right:12px;}}
-
-/* --- Patch: lang-switch below topbar and readable --- */
-.lang-switch{
-  position: sticky;
-  top: 58px;
-  z-index: 30;
-  background: rgba(255,255,255,0.92);
-  border-bottom: 1px solid #eaeaea;
-  backdrop-filter: blur(8px);
-}
-.lang-switch .lang-btn{
-  border: 1px solid rgba(0,0,0,0.12);
-  background: rgba(0,0,0,0.03);
-}
-.lang-switch .lang-btn:hover{ background: rgba(0,0,0,0.07); }

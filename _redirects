@@ -1,11 +1,24 @@
-# 0) Assets: qualquer URL com extensão (.) deve passar direto
+# Assets: anything with a dot is a file, do not rewrite
 /*.*  /:splat  200!
 
-# 1) Rotas limpas -> arquivos .html (rewrite 200)
-/obrigado      /obrigado.html 200
-/obrigado/     /obrigado.html 200
-/:splat/       /:splat.html   200
-/:splat        /:splat.html   200
+# Pretty URLs -> corresponding .html (rewrite, no redirect)
+/
+/index.html  /  301!
+/financas    /financas.html  200
+/financas/   /financas.html  200
+/saude       /saude.html     200
+/saude/      /saude.html     200
+/trade       /trade.html     200
+/trade/      /trade.html     200
+/sobre       /sobre.html     200
+/sobre/      /sobre.html     200
+/contato     /contato.html   200
+/contato/    /contato.html   200
+/privacidade /privacidade.html 200
+/privacidade/ /privacidade.html 200
+/termos      /termos.html    200
+/termos/     /termos.html    200
 
-# 2) Home
-/index.html    /              301!
+# Generic fallback for other pages
+/:splat      /:splat.html    200
+/:splat/     /:splat.html    200
