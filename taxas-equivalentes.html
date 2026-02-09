@@ -3,10 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="stylesheet" href="/styles_v2.css">
+<link rel="stylesheet" href="/styles_v2.css?v=20260208"">
   <title>Taxas Equivalentes – Calcsy</title>
   <meta name="description" content="Converta uma taxa efetiva de um período para taxas equivalentes em outros períodos (juros compostos)." />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6312780548795703" crossorigin="anonymous"></script>
+<style>
+/* Critical CSS fallback (in case external stylesheet is blocked by rewrites/proxies) */
+:root{color-scheme:light}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f7f8fb;color:#0f172a}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 16px}
+.topbar{position:sticky;top:0;z-index:50;background:#0b1220;color:#fff}
+.topbar .inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+.nav{display:flex;gap:14px;flex-wrap:wrap}
+.nav a{opacity:.9}
+.nav a:hover{opacity:1}
+.lang-switch{position:sticky;top:56px;z-index:40;display:flex;justify-content:flex-end;gap:10px;padding:10px 12px;background:rgba(255,255,255,.92);border-bottom:1px solid #eaeaea;backdrop-filter:blur(8px)}
+.lang-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;border:1px solid rgba(0,0,0,.12);background:rgba(0,0,0,.03);cursor:pointer}
+.hero{padding:26px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #eef2ff;border-radius:16px;padding:16px;box-shadow:0 8px 20px rgba(2,6,23,.06)}
+.card h3{margin:0 0 6px 0}
+.footer{padding:26px 0;color:#64748b;font-size:14px}
+</style>
 </head>
 
 <body>
@@ -84,30 +104,7 @@
     </section>
 
     <p style="margin:18px 0 0;opacity:.75;">© 2025 · Calcsy</p>
-  
-
-<section class="card" style="margin-top:18px;">
-      <h2>Guia rápido: taxas equivalentes</h2>
-      <p>
-        Taxas equivalentes são taxas <b>diferentes</b> (mensal, anual, diária…) que geram o <b>mesmo fator de capitalização</b>
-        quando você usa juros compostos. Isso evita comparar “maçã com laranja” (ex.: 2% ao mês vs 24% ao ano).
-      </p>
-      <h3>Como a conversão funciona</h3>
-      <p style="opacity:.9;">
-        A ideia é manter o fator: <b>(1+i)<sup>t</sup></b>. Se você tem uma taxa efetiva em um período, calculamos o fator desse período
-        e reescrevemos para o novo período.
-      </p>
-      <h3>Exemplo prático</h3>
-      <ul>
-        <li>Taxa: <b>2,00% a.m.</b></li>
-        <li>Equivalente anual (composto): <b>(1,02)<sup>12</sup> − 1</b></li>
-      </ul>
-      <h3>Perguntas comuns</h3>
-      <details><summary>Posso usar 252 dias úteis?</summary><p>Para ativos indexados a dias úteis, faz sentido. Para comparação geral, 365 dias/ano é o padrão mais claro.</p></details>
-      <details><summary>Taxa nominal e efetiva são a mesma coisa?</summary><p>Não. A efetiva já inclui o efeito de capitalização no período. A nominal costuma ser uma “taxa anunciada” que precisa de conversão.</p></details>
-    </section>
-
-</main>
+  </main>
 
 <script>
   const periods = {
